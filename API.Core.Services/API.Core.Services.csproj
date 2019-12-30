@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\API.Core\bin\Debug</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\API.Core.Common\API.Core.Common.csproj" />
+    <ProjectReference Include="..\API.Core.IRepository\API.Core.IRepository.csproj" />
+    <ProjectReference Include="..\API.Core.IServices\API.Core.IServices.csproj" />
+    <ProjectReference Include="..\API.Core.Model\API.Core.Model.csproj" />
+  </ItemGroup>
+
+</Project>
