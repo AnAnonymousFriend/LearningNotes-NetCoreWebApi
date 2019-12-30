@@ -23,7 +23,21 @@ namespace API.Core.AOP
 
 
             // 执行当前访问的服务方法,(注意:如果下边还有其他的AOP拦截器的话,会跳转到其他的AOP里)
-            invocation.Proceed();
+
+            try
+            {
+                invocation.Proceed();
+            }
+            catch (Exception ex )
+            {
+
+                Parallel.For(0, 1, e =>
+                {
+                    LogLock.OutSql2Log("AOPLog", new string[] { ex.ToString() });
+                });
+            }
+
+          
 
             // 事后处理: 在service被执行了以后,做相应的处理,这里是输出到日志文件
             dataIntercept += ($"【执行完成结果】：{invocation.ReturnValue}");
