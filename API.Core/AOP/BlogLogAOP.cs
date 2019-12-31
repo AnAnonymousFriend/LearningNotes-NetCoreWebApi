@@ -39,14 +39,14 @@ namespace API.Core.AOP
 
           
 
-            // 事后处理: 在service被执行了以后,做相应的处理,这里是输出到日志文件
-            dataIntercept += ($"【执行完成结果】：{invocation.ReturnValue}");
+            //// 事后处理: 在service被执行了以后,做相应的处理,这里是输出到日志文件
+            //dataIntercept += ($"【执行完成结果】：{invocation.ReturnValue}");
 
-            // 输出到日志文件
-            Parallel.For(0, 1, e =>
-            {
-                LogLock.OutSql2Log("AOPLog", new string[] { dataIntercept });
-            });
+            //// 输出到日志文件
+            //Parallel.For(0, 1, e =>
+            //{
+            //    LogLock.OutSql2Log("AOPLog", new string[] { dataIntercept });
+            //});
 
         }
 

@@ -28,5 +28,13 @@ namespace API.Core.Services
              BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(blogArticle);
              return models;
         }
+
+        public async Task<object> TestGetBinList()
+        {
+            var blogArticle = await base.FedEx<BinInfo,OrderInfo>("order_id","id");
+
+            return null;
+
+        }
     }
 }

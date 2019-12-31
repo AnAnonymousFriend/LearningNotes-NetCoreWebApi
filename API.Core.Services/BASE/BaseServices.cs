@@ -245,9 +245,14 @@ namespace API.Core.Services.BASE
         int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
         {
             return await baseDal.QueryPage(whereExpression,
-         intPageIndex = 0, intPageSize, strOrderByFileds);
+                         intPageIndex = 0, intPageSize, strOrderByFileds);
         }
 
+        public async Task<object> FedEx<TEntity1, TEntity2>(string s1, string s2)
+        {
+            return await baseDal.FedEx<TEntity1, TEntity2>(s1, s2);
+            
+        }
     }
 
 }

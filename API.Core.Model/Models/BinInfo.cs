@@ -67,5 +67,10 @@ namespace API.Core.Model.Models
         /// </summary>
         public string Version { get; set; }
 
+        /// <summary>
+        /// 订单外键
+        /// </summary>
+        public int order_id { get; set; }
+
     }
 }

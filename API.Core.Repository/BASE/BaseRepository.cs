@@ -1,4 +1,5 @@
 ﻿using API.Core.IRepository.BASE;
+using API.Core.Model.Models;
 using API.Core.Repository.sugar;
 using SqlSugar;
 using System;
@@ -303,9 +304,6 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => db.Queryable<TEntity>().OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds).WhereIF(!string.IsNullOrEmpty(strWhere), strWhere).ToPageList(intPageIndex, intPageSize));
             }
 
-
-
-
             public async Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression,
             int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
             {
@@ -315,13 +313,37 @@ namespace API.Core.Repository.BASE
                 .ToPageList(intPageIndex, intPageSize));
             }
 
+            /// <summary>
+            /// 执行SQL查询语句
+            /// </summary>
+            /// <param name="sql">执行sql语句查询</param>
+            /// <returns></returns>
+            public async Task<List<TEntity>> QuerySQL(string sql)
+            {
+                return await Task.Run(() => db.SqlQueryable<TEntity>(sql).ToList());
+            }
+
+            /// <summary>
+            /// 连表查询
+            /// </summary>
+            /// <param name="sql"></param>
+            /// <returns></returns>
+             public async Task<object> FedEx<TEntity1,TEntity2>(string foreignKey,string Id)
+             {
+                string Class1 = "";
+                string Class2 = "";
+                string relation = $"s1.{foreignKey} = s2.{Id}";
+                //也可以Select<T>(“*”).ToList()返回实体集合
+                dynamic join3 = db.Queryable(Class1, "s1")
+                                  .AddJoinInfo(Class2, "s2", relation)
+                                  .Select("s1.Sn").ToList();
+
+                return await join3;
+
+            }
 
 
 
         }
-
-
     }
-
-
 }
