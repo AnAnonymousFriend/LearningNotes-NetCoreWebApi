@@ -346,7 +346,7 @@ namespace API.Core.Repository.BASE
             }
 
             /// <summary>
-            /// 双联表查询
+            /// 双联表查询全部
             /// </summary>
             /// <param name="doubleTable"></param>
             /// <returns></returns>
@@ -355,7 +355,9 @@ namespace API.Core.Repository.BASE
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
                 return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
-                                              .Select<TEntity>("*").ToList()
+                                              .Select<TEntity>("*")
+                                              .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
+                                              .ToList()
                );
             }
 
@@ -376,8 +378,23 @@ namespace API.Core.Repository.BASE
                );
             }
 
-
-
+            /// <summary>
+            /// 联表查询 where
+            /// </summary>
+            /// <param name="whereExpression">条件表达式</param>
+            /// <param name="doubleTable">联表参数</param>
+            /// <returns></returns>
+            public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression,DoubleTable doubleTable)
+            {
+                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
+                return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
+                                              .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
+                                              .Select<TEntity>("*")
+                                              .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
+                                              .WhereIF(whereExpression != null, whereExpression)
+                                              .ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
+               );
+            }
 
 
         }
