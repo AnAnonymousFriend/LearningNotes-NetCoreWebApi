@@ -1,5 +1,6 @@
 ﻿using API.Core.IRepository;
 using API.Core.IServices;
+using API.Core.Model;
 using API.Core.Model.Models;
 using API.Core.Model.ViewModels;
 using API.Core.Services.BASE;
@@ -31,11 +32,17 @@ namespace API.Core.Services
 
         public async Task<object> TestGetBinList()
         {
-            throw new System.Exception("Throw Exception");
 
-            var blogArticle = await base.FedEx<BinInfo, OrderInfo>("order_id", "Id");
+            DoubleTable doubleTable = new DoubleTable();
+            doubleTable.LeftSurface = "BinInfo";
+            doubleTable.RightSurface = "OrderInfo";
+            doubleTable.Key = "Id";
+            doubleTable.ForeignKey = "order_id";
+            var bins = await base.FedExPage(doubleTable);
 
-            return null;
+
+
+            return bins;
 
         }
 

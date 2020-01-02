@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace API.Core.IRepository.BASE
@@ -37,5 +36,15 @@ namespace API.Core.IRepository.BASE
             Expression<Func<TEntity, bool>> whereExpression, int intPageIndex, int intPageSize, string strOrderByFileds);
         Task<List<TEntity>> Query(string strWhere, int intPageIndex, int intPageSize, string strOrderByFileds);
         Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null);
+
+        Task<List<TEntity>> QuerySQL(string sql);
+
+        Task<List<TEntity>> FedEx(Model.DoubleTable doubleTable);
+
+        Task<List<TEntity>> FedExPage(Model.DoubleTable doubleTable);
+
+
+        Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, Model.DoubleTable doubleTable);
+
     }
 }

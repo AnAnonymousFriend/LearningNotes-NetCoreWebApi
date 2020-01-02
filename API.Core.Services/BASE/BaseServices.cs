@@ -248,6 +248,35 @@ namespace API.Core.Services.BASE
          intPageIndex = 0, intPageSize, strOrderByFileds);
         }
 
+
+        /// <summary>
+        /// SQL单表查询
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public async Task<List<TEntity>> QuerySQL(string sql)
+        {
+            return await baseDal.QuerySQL(sql);
+        }
+
+
+        public async Task<List<TEntity>> FedEx(Model.DoubleTable doubleTable)
+        {
+            return await baseDal.FedEx(doubleTable);
+        }
+
+        public async Task<List<TEntity>> FedExPage(Model.DoubleTable doubleTable)
+        {
+            return await baseDal.FedEx(doubleTable);
+        }
+
+
+        public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, Model.DoubleTable doubleTable)
+        {
+            return await baseDal.FedExPage(whereExpression,doubleTable);
+        }
+
+
     }
 
 }
