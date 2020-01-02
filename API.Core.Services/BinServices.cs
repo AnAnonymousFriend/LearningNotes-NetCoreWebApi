@@ -5,6 +5,7 @@ using API.Core.Model.Models;
 using API.Core.Model.ViewModels;
 using API.Core.Services.BASE;
 using AutoMapper;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,16 +33,17 @@ namespace API.Core.Services
 
         
 
-         public async Task<BinInfo> TestGetBinList()
+         public async Task<List<BinInfo>> TestGetBinList()
         {
+
             DoubleTable doubleTable = new DoubleTable();
             doubleTable.LeftSurface = "BinInfo";
             doubleTable.RightSurface = "OrderInfo";
             doubleTable.Key = "Id";
             doubleTable.ForeignKey = "order_id";
-            var list =  await base.FedExPage(doubleTable);
+            return await base.FedExPage(doubleTable);
             
-            return null;
+           
         }
     }
 }

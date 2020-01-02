@@ -357,15 +357,6 @@ namespace API.Core.Repository.BASE
             {
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
 
-                var a =  db.Queryable(doubleTable.LeftSurface, "s1")
-                                              .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
-                                              .Select<TEntity>("*")
-                                              .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
-                                              .ToSql();
-
-
-                
-
                 return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
                                               .Select<TEntity>("*")
