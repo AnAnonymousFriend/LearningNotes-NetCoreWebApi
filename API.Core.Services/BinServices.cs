@@ -30,22 +30,18 @@ namespace API.Core.Services
             return models;
         }
 
-        public async Task<object> TestGetBinList()
-        {
+        
 
+         public async Task<BinInfo> TestGetBinList()
+        {
             DoubleTable doubleTable = new DoubleTable();
             doubleTable.LeftSurface = "BinInfo";
             doubleTable.RightSurface = "OrderInfo";
             doubleTable.Key = "Id";
             doubleTable.ForeignKey = "order_id";
-            var bins = await base.FedExPage(doubleTable);
-
-
-
-            return bins;
-
+            var list =  await base.FedExPage(doubleTable);
+            
+            return null;
         }
-
-
     }
 }

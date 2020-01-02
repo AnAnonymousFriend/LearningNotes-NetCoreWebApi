@@ -12,5 +12,8 @@ namespace API.Core.IServices
     {
       
         Task<BinInfoViewModels> GetBinList();
+
+
+        Task<BinInfo> TestGetBinList();
     }
 }

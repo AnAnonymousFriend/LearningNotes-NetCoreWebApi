@@ -267,7 +267,7 @@ namespace API.Core.Services.BASE
 
         public async Task<List<TEntity>> FedExPage(Model.DoubleTable doubleTable)
         {
-            return await baseDal.FedEx(doubleTable);
+            return await baseDal.FedExPage(doubleTable);
         }
 
 
