@@ -31,7 +31,7 @@ namespace API.Core.Services
 
         public async Task<object> TestGetBinList()
         {
-            var blogArticle = await base.FedEx<BinInfo,OrderInfo>("order_id","id");
+            var blogArticle = await base.FedEx<BinInfo,OrderInfo>("order_id","Id");
 
             return null;
 

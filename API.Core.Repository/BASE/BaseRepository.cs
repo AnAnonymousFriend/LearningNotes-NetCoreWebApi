@@ -1,4 +1,5 @@
 ﻿using API.Core.IRepository.BASE;
+using API.Core.Model;
 using API.Core.Model.Models;
 using API.Core.Repository.sugar;
 using SqlSugar;
@@ -317,30 +318,63 @@ namespace API.Core.Repository.BASE
             /// 执行SQL查询语句
             /// </summary>
             /// <param name="sql">执行sql语句查询</param>
-            /// <returns></returns>
+            /// <returns>返回TEntity实体集合</returns>
             public async Task<List<TEntity>> QuerySQL(string sql)
             {
                 return await Task.Run(() => db.SqlQueryable<TEntity>(sql).ToList());
             }
 
             /// <summary>
-            /// 连表查询
+            /// 联表查询
             /// </summary>
-            /// <param name="sql"></param>
+            /// <typeparam name="TEntity1">实体类1</typeparam>
+            /// <typeparam name="TEntity2">实体类2</typeparam>
+            /// <param name="foreignKey">实体类1外键</param>
+            /// <param name="Id">实体类2主键</param>
             /// <returns></returns>
-             public async Task<object> FedEx<TEntity1,TEntity2>(string foreignKey,string Id)
-             {
-                string Class1 = "";
-                string Class2 = "";
+            public async Task<object> FedEx<TEntity1, TEntity2>(string foreignKey, string Id)
+            {
                 string relation = $"s1.{foreignKey} = s2.{Id}";
-                //也可以Select<T>(“*”).ToList()返回实体集合
-                dynamic join3 = db.Queryable(Class1, "s1")
-                                  .AddJoinInfo(Class2, "s2", relation)
-                                  .Select("s1.Sn").ToList();
+                var TestSQl = db.Queryable("BinInfo", "s1")
+                                              .AddJoinInfo("OrderInfo", "s2", relation)
+                                              .Select("s1.Sn").ToSql();
 
-                return await join3;
-
+                return await Task.Run(() => db.Queryable("BinInfo", "s1")
+                                              .AddJoinInfo("OrderInfo", "s2", relation)
+                                              .Select("s1.Sn").ToSql()
+               );  
             }
+
+            /// <summary>
+            /// 双联表查询
+            /// </summary>
+            /// <param name="doubleTable"></param>
+            /// <returns></returns>
+            public async Task<List<TEntity>> FedEx(DoubleTable doubleTable)
+            {
+                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
+                return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
+                                              .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
+                                              .Select<TEntity>("*").ToList()
+               );
+            }
+
+            /// <summary>
+            /// 联表查询分页
+            /// </summary>
+            /// <param name="doubleTable"></param>
+            /// <returns></returns>
+
+            public async Task<List<TEntity>> FedExPage(DoubleTable doubleTable)
+            {
+                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
+                return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
+                                              .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
+                                              .Select<TEntity>("*").ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
+               );
+            }
+
+
 
 
 
