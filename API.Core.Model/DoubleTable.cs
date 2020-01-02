@@ -35,8 +35,11 @@ namespace API.Core.Model
         /// 页大小
         /// </summary>
         public int IntPageSize { get; set; } = 10;
-      
 
+        /// <summary>
+        /// 排序条件
+        /// </summary>
+        public string OrderByFileds { get; set; }
 
     }
 }

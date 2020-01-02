@@ -370,7 +370,9 @@ namespace API.Core.Repository.BASE
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
                 return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
-                                              .Select<TEntity>("*").ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
+                                              .Select<TEntity>("*")
+                                              .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
+                                              .ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
                );
             }
 
