@@ -31,6 +31,8 @@ namespace API.Core.Services
 
         public async Task<object> TestGetBinList()
         {
+            throw new System.Exception("Throw Exception");
+
             var blogArticle = await base.FedEx<BinInfo,OrderInfo>("order_id","Id");
 
             return null;

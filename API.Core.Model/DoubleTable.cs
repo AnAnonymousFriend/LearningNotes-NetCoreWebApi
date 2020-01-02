@@ -41,7 +41,5 @@ namespace API.Core.Model
         /// </summary>
         public string OrderByFileds { get; set; }
 
-
-
     }
 }

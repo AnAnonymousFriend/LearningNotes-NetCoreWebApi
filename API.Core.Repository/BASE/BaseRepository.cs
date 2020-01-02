@@ -379,7 +379,7 @@ namespace API.Core.Repository.BASE
             }
 
             /// <summary>
-            /// 联表查询 where
+            /// 联表查询 
             /// </summary>
             /// <param name="whereExpression">条件表达式</param>
             /// <param name="doubleTable">联表参数</param>

@@ -12,8 +12,4 @@
 
 ![image-20200102142435111](C:\Users\kai_wang\AppData\Roaming\Typora\typora-user-images\image-20200102142435111.png)
 
-参数详解：
-
-DoubleTable 为参数实体类 
-
-![image-20200102142648803](C:\Users\kai_wang\AppData\Roaming\Typora\typora-user-images\image-20200102142648803.png)
+DoubleTable 为参数实体类 包含需查询表的名称，外联表及关联参数等

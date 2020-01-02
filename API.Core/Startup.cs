@@ -105,7 +105,8 @@ namespace API.Core
                       .AsImplementedInterfaces()
                       .InstancePerLifetimeScope()
                       .EnableInterfaceInterceptors()
-                      .InterceptedBy(cacheType.ToArray());
+                      .InterceptedBy(typeof(BlogLogAOP));
+                     //.InterceptedBy(cacheType.ToArray());
 
             // ×¢²á²Ö´¢
             var repositoryDllFile = Path.Combine(basePath, "API.Core.Repository.dll");
