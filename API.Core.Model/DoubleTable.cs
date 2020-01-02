@@ -19,8 +19,8 @@ namespace API.Core.Model
         /// <summary>
         /// 右表主键
         /// </summary>
-        public string Key { get;set ; }
-       
+        public string Key { get; set; }
+
         /// <summary>
         /// 左表外键
         /// </summary>

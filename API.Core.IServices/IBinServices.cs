@@ -10,9 +10,7 @@ namespace API.Core.IServices
 {
     public interface IBinServices : IBaseServices<BinInfo>
     {
+      
         Task<BinInfoViewModels> GetBinList();
-
-        Task<object> TestGetBinList();
-
     }
 }

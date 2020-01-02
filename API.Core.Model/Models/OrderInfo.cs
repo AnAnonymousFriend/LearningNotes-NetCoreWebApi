@@ -14,9 +14,9 @@ namespace API.Core.Model.Models
         /// <summary>
         /// 订单编号
         /// </summary>
-        public string OrderId {get;set; }
-                
-       
+        public string OrderId { get; set; }
+
+
 
     }
 }

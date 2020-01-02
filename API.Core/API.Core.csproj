@@ -24,9 +24,5 @@
     <ProjectReference Include="..\API.Core.Services\API.Core.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Log\" />
-  </ItemGroup>
-
 
 </Project>

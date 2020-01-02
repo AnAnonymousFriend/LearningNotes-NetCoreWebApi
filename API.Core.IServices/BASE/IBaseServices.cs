@@ -42,8 +42,5 @@ namespace API.Core.IServices.BASE
 
 
         Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null);
-
-        Task<object> FedEx<TEntity1, TEntity2>(string s1,string s2);
-
     }
 }

@@ -1,6 +1,4 @@
 ﻿using API.Core.IRepository.BASE;
-using API.Core.Model;
-using API.Core.Model.Models;
 using API.Core.Repository.sugar;
 using SqlSugar;
 using System;
@@ -305,6 +303,9 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => db.Queryable<TEntity>().OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds).WhereIF(!string.IsNullOrEmpty(strWhere), strWhere).ToPageList(intPageIndex, intPageSize));
             }
 
+
+
+
             public async Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression,
             int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
             {
@@ -313,6 +314,8 @@ namespace API.Core.Repository.BASE
                 .WhereIF(whereExpression != null, whereExpression)
                 .ToPageList(intPageIndex, intPageSize));
             }
+
+
 
             /// <summary>
             /// 执行SQL查询语句
@@ -342,7 +345,7 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => db.Queryable("BinInfo", "s1")
                                               .AddJoinInfo("OrderInfo", "s2", relation)
                                               .Select("s1.Sn").ToSql()
-               );  
+               );
             }
 
             /// <summary>
@@ -384,7 +387,7 @@ namespace API.Core.Repository.BASE
             /// <param name="whereExpression">条件表达式</param>
             /// <param name="doubleTable">联表参数</param>
             /// <returns></returns>
-            public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression,DoubleTable doubleTable)
+            public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable)
             {
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
                 return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
@@ -397,6 +400,13 @@ namespace API.Core.Repository.BASE
             }
 
 
+
+
+
         }
+
+
     }
+
+
 }

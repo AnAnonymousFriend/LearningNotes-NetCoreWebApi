@@ -32,16 +32,6 @@ namespace API.Core.Controllers
             return data;
         }
 
-        // GET: api/Test
-        [HttpGet]
-        [Route("GetTest")]
-        public async Task<object> GetTest()
-        {
-            var model = await _binArticleServices.TestGetBinList();//调用该方法，这里 _blogArticleServices 是依赖注入的实例，不是类
-            var data = new { success = true, data = model };
-            return data;
-        }
-
-
+      
     }
 }
