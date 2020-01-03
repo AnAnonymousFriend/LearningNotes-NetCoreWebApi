@@ -132,6 +132,23 @@ namespace API.Core.Common.Redis
             {
                 //序列化，将object值生成RedisValue
                 redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value), cacheTime);
+                
+            }
+        }
+
+        /// <summary>
+        /// 设置
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="cacheTime"></param>
+        public void Set(string key, object value)
+        {
+            if (value != null)
+            {
+                //序列化，将object值生成RedisValue
+                redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value));
+
             }
         }
 
@@ -145,6 +162,41 @@ namespace API.Core.Common.Redis
         {
             return redisConnection.GetDatabase().StringSet(key, value, TimeSpan.FromSeconds(120));
         }
+
+        /// <summary>
+        /// 在列表尾部插入值。如果键不存在，先创建再插入值
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <param name="redisValue"></param>
+        /// <returns></returns>
+        public long ListRightPush<T>(string redisKey, T redisValue)
+        {
+            return redisConnection.GetDatabase().ListRightPush(redisKey, SerializeHelper.Serialize(redisValue));
+        }
+
+        /// <summary>
+        /// 返回在该列表上键所对应的元素
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <returns></returns>
+        public IEnumerable<RedisValue> ListRange(string redisKey)
+        {
+
+            return redisConnection.GetDatabase().ListRange(redisKey);
+        }
+
+
+        /// <summary>
+        /// 移除列表指定键上与该值相同的元素
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <param name="redisValue"></param>
+        /// <returns></returns>
+        public long ListRemove(string redisKey, string redisValue)
+        {
+            return redisConnection.GetDatabase().ListRemove(redisKey, redisValue);
+        }
+
 
     }
 }
