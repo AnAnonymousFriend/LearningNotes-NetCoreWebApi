@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Core.Common.Helper;
 using API.Core.IServices;
+using API.Core.Model;
+using API.Core.Model.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -42,6 +45,25 @@ namespace API.Core.Controllers
             var data = new { success = true, data = model };
             return data;
         }
+
+        [HttpPost]
+        [Route("AddBin")]
+        public async Task<MessageModel<string>> AddBin([FromBody] BinInfo binInfo) 
+        {
+            var data = new MessageModel<string>();
+            binInfo.CreateTime= DateTime.Now;
+
+            var id = (await _binArticleServices.Add(binInfo));
+            data.Success = id > 0;
+            if (data.Success)
+            {
+                data.Response = id.ObjToString();
+                data.Msg = "添加成功";
+            }
+
+            return data;
+        }
+
 
     }
 }

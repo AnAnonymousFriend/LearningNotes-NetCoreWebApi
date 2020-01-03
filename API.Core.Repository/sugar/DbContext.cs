@@ -8,37 +8,21 @@ namespace API.Core.Repository.sugar
     public class DbContext
     {
 
-        private static string _connectionString;
-        private static DbType _dbType;
-        private SqlSugarClient _db;
-
         /// <summary>
         /// 连接字符串 
         /// Blog.Core
         /// </summary>
-        public static string ConnectionString
-        {
-            get { return _connectionString; }
-            set { _connectionString = value; }
-        }
+        public static string ConnectionString { get; set; }
         /// <summary>
         /// 数据库类型 
         /// Blog.Core 
         /// </summary>
-        public static DbType DbType
-        {
-            get { return _dbType; }
-            set { _dbType = value; }
-        }
+        public static DbType DbType { get; set; }
         /// <summary>
         /// 数据连接对象 
         /// Blog.Core 
         /// </summary>
-        public SqlSugarClient Db
-        {
-            get { return _db; }
-            private set { _db = value; }
-        }
+        public SqlSugarClient Db { get; private set; }
 
         /// <summary>
         /// 数据库上下文实例（自动关闭连接）
@@ -60,12 +44,12 @@ namespace API.Core.Repository.sugar
         /// </summary>
         private DbContext()
         {
-            if (string.IsNullOrEmpty(_connectionString))
+            if (string.IsNullOrEmpty(ConnectionString))
                 throw new ArgumentNullException("数据库连接字符串为空");
-            _db = new SqlSugarClient(new ConnectionConfig()
+            Db = new SqlSugarClient(new ConnectionConfig()
             {
-                ConnectionString = _connectionString,
-                DbType = _dbType,
+                ConnectionString = ConnectionString,
+                DbType = DbType,
                 IsAutoCloseConnection = true,
                 IsShardSameThread = true,
                 ConfigureExternalServices = new ConfigureExternalServices()
@@ -87,12 +71,12 @@ namespace API.Core.Repository.sugar
         /// <param name="blnIsAutoCloseConnection">是否自动关闭连接</param>
         private DbContext(bool blnIsAutoCloseConnection)
         {
-            if (string.IsNullOrEmpty(_connectionString))
+            if (string.IsNullOrEmpty(ConnectionString))
                 throw new ArgumentNullException("数据库连接字符串为空");
-            _db = new SqlSugarClient(new ConnectionConfig()
+            Db = new SqlSugarClient(new ConnectionConfig()
             {
-                ConnectionString = _connectionString,
-                DbType = _dbType,
+                ConnectionString = ConnectionString,
+                DbType = DbType,
                 IsAutoCloseConnection = blnIsAutoCloseConnection,
                 IsShardSameThread = true,
                 ConfigureExternalServices = new ConfigureExternalServices()
@@ -115,7 +99,7 @@ namespace API.Core.Repository.sugar
         /// <returns>返回值</returns>
         public SimpleClient<T> GetEntityDB<T>() where T : class, new()
         {
-            return new SimpleClient<T>(_db);
+            return new SimpleClient<T>(Db);
         }
         /// <summary>
         /// 功能描述:获取数据库处理对象
@@ -181,7 +165,7 @@ namespace API.Core.Repository.sugar
         {
             if (lstTableNames != null && lstTableNames.Length > 0)
             {
-                _db.DbFirst.Where(lstTableNames).IsCreateDefaultValue().IsCreateAttribute()
+                Db.DbFirst.Where(lstTableNames).IsCreateDefaultValue().IsCreateAttribute()
                     .SettingClassTemplate(p => p = @"
 {using}
 
@@ -221,7 +205,7 @@ namespace {Namespace}
             }
             else
             {
-                _db.DbFirst.IsCreateAttribute().IsCreateDefaultValue()
+                Db.DbFirst.IsCreateAttribute().IsCreateDefaultValue()
                     .SettingClassTemplate(p => p = @"
 {using}
 
@@ -294,11 +278,11 @@ namespace {Namespace}
         {
             if (blnBackupTable)
             {
-                _db.CodeFirst.BackupTable().InitTables(lstEntitys); //change entity backupTable            
+                Db.CodeFirst.BackupTable().InitTables(lstEntitys); //change entity backupTable            
             }
             else
             {
-                _db.CodeFirst.InitTables(lstEntitys);
+                Db.CodeFirst.InitTables(lstEntitys);
             }
         }
         #endregion
@@ -326,8 +310,8 @@ namespace {Namespace}
         /// <param name="enmDbType">数据库类型</param>
         public static void Init(string strConnectionString, DbType enmDbType = SqlSugar.DbType.MySql)
         {
-            _connectionString = strConnectionString;
-            _dbType = enmDbType;
+            ConnectionString = strConnectionString;
+            DbType = enmDbType;
         }
 
         /// <summary>
@@ -341,8 +325,8 @@ namespace {Namespace}
         {
             ConnectionConfig config = new ConnectionConfig()
             {
-                ConnectionString = _connectionString,
-                DbType = _dbType,
+                ConnectionString = ConnectionString,
+                DbType = DbType,
                 IsAutoCloseConnection = blnIsAutoCloseConnection,
                 ConfigureExternalServices = new ConfigureExternalServices()
                 {

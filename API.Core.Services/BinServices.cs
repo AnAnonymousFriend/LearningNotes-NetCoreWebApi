@@ -1,10 +1,12 @@
-﻿using API.Core.IRepository;
+﻿using API.Core.Common.Helper;
+using API.Core.IRepository;
 using API.Core.IServices;
 using API.Core.Model;
 using API.Core.Model.Models;
 using API.Core.Model.ViewModels;
 using API.Core.Services.BASE;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +28,7 @@ namespace API.Core.Services
 
         public async Task<BinInfoViewModels> GetBinList()
         {
-            var blogArticle = (await base.Query(a => a.Id == 1)).FirstOrDefault();
+            var blogArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
             BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(blogArticle);
             return models;
         }
@@ -51,6 +53,6 @@ namespace API.Core.Services
 
         }
 
-
+      
     }
 }

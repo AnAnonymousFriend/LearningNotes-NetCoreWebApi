@@ -108,7 +108,7 @@ namespace API.Core.Common.Redis
             }
             else
             {
-                return default(TEntity);
+                return default;
             }
         }
 
