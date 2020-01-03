@@ -6,6 +6,9 @@ namespace API.Core.Model
 {
     public class DoubleTable
     {
+       
+      
+
         /// <summary>
         /// 左表
         /// </summary>
@@ -19,7 +22,7 @@ namespace API.Core.Model
         /// <summary>
         /// 右表主键
         /// </summary>
-        public string Key { get; set; }
+        public string RightKey { get; set; }
 
         /// <summary>
         /// 左表外键
@@ -40,6 +43,12 @@ namespace API.Core.Model
         /// 排序条件
         /// </summary>
         public string OrderByFileds { get; set; }
+
+
+        /// <summary>
+        /// 查询字段
+        /// </summary>
+        public string[] QueryField { get; set; }
 
     }
 }

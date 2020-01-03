@@ -37,7 +37,8 @@ namespace API.Core.Controllers
         [Route("LeagueTableTest")]
         public async Task<object> LeagueTableTest()
         {
-            var model = await _binArticleServices.TestGetBinList();//调用该方法，这里 _blogArticleServices 是依赖注入的实例，不是类
+            //调用该方法，这里 _blogArticleServices 是依赖注入的实例，不是类
+            var model = await _binArticleServices.TestGetBinList();
             var data = new { success = true, data = model };
             return data;
         }

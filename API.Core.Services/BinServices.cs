@@ -16,7 +16,7 @@ namespace API.Core.Services
         IBinArticleRepository _dal;
         IMapper _mapper;
 
-        public BinServices(IBinArticleRepository dal, IMapper mapper) 
+        public BinServices(IBinArticleRepository dal, IMapper mapper)
         {
             this._dal = dal;
             base.baseDal = dal;
@@ -31,19 +31,26 @@ namespace API.Core.Services
             return models;
         }
 
-        
 
-         public async Task<List<BinInfo>> TestGetBinList()
+
+        public async Task<List<BinInfo>> TestGetBinList()
         {
+            DoubleTable doubleTable = new DoubleTable
+            {
+                LeftSurface = "BinInfo",
+                RightSurface = "OrderInfo",
+                RightKey = "Id",
+                ForeignKey = "order_id",
+                QueryField = new string[] 
+                {
+                    "Pn",
+                    "Sn"
+                }
+            };
+            return await FedExPage(doubleTable);
 
-            DoubleTable doubleTable = new DoubleTable();
-            doubleTable.LeftSurface = "BinInfo";
-            doubleTable.RightSurface = "OrderInfo";
-            doubleTable.Key = "Id";
-            doubleTable.ForeignKey = "order_id";
-            return await base.FedExPage(doubleTable);
-            
-           
         }
+
+
     }
 }

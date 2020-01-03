@@ -5,6 +5,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace API.Core.Repository.BASE
@@ -355,11 +356,10 @@ namespace API.Core.Repository.BASE
             /// <returns></returns>
             public async Task<List<TEntity>> FedEx(DoubleTable doubleTable)
             {
-                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
-
+                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
-                                              .Select<TEntity>("*")
+                                              .Select<TEntity>(GetQueryField(doubleTable.QueryField))
                                               .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
                                               .ToList()
                );
@@ -370,13 +370,12 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="doubleTable"></param>
             /// <returns></returns>
-
             public async Task<List<TEntity>> FedExPage(DoubleTable doubleTable)
             {
-                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
+                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
-                                              .Select<TEntity>("*")
+                                              .Select<TEntity>(GetQueryField(doubleTable.QueryField))
                                               .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
                                               .ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
                );
@@ -390,7 +389,7 @@ namespace API.Core.Repository.BASE
             /// <returns></returns>
             public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable)
             {
-                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.Key}";
+                string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
                                               .Select<TEntity>("*")
@@ -400,7 +399,27 @@ namespace API.Core.Repository.BASE
                );
             }
 
+            /// <summary>
+            /// 解析查询字段
+            /// </summary>
+            /// <param name="QueryField"></param>
+            /// <returns></returns>
+            private string GetQueryField(string[] QueryField) 
+            {
+                if (QueryField!=null&&QueryField.Length>0)
+                {
+                    StringBuilder queryField = new StringBuilder();
+                    foreach (var item in QueryField)
+                    {
+                        queryField.Append(item + ",");
+                    }
 
+                    return queryField.ToString()[0..^1];
+
+                }
+                else
+                    return "*";
+            }
 
 
 
