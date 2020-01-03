@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core", "API.Core.csproj", "{ABB01079-DB60-4C9C-BABC-0CE4B2B50EA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core", "API.Core.csproj", "{ABB01079-DB60-4C9C-BABC-0CE4B2B50EA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core.Common", "..\API.Core.Common\API.Core.Common.csproj", "{66BB721E-AAE5-4F92-9663-395F0F6A11C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core.Common", "..\API.Core.Common\API.Core.Common.csproj", "{66BB721E-AAE5-4F92-9663-395F0F6A11C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core.Model", "..\API.Core.Model\API.Core.Model.csproj", "{F3ED4359-0B8B-4B58-9015-0470AB90B0A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core.Model", "..\API.Core.Model\API.Core.Model.csproj", "{F3ED4359-0B8B-4B58-9015-0470AB90B0A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core.Repository", "..\API.Core.Repository\API.Core.Repository.csproj", "{A80D8832-C687-4AF6-B78B-0F77B75D7465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core.Repository", "..\API.Core.Repository\API.Core.Repository.csproj", "{A80D8832-C687-4AF6-B78B-0F77B75D7465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core.IRepository", "..\API.Core.IRepository\API.Core.IRepository.csproj", "{69E21847-56C7-454C-924A-7A1A472D8A86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core.IRepository", "..\API.Core.IRepository\API.Core.IRepository.csproj", "{69E21847-56C7-454C-924A-7A1A472D8A86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core.Services", "..\API.Core.Services\API.Core.Services.csproj", "{EFDBF19F-6A46-4194-8BD8-1642BCA26604}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core.Services", "..\API.Core.Services\API.Core.Services.csproj", "{EFDBF19F-6A46-4194-8BD8-1642BCA26604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core.IServices", "..\API.Core.IServices\API.Core.IServices.csproj", "{5E37A3B3-3E78-459D-AF90-A81EAFA2EDA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core.IServices", "..\API.Core.IServices\API.Core.IServices.csproj", "{5E37A3B3-3E78-459D-AF90-A81EAFA2EDA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
