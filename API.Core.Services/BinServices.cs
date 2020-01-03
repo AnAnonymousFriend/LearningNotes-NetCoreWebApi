@@ -1,4 +1,5 @@
 ﻿using API.Core.Common.Helper;
+using API.Core.Common.Redis;
 using API.Core.IRepository;
 using API.Core.IServices;
 using API.Core.Model;
@@ -7,6 +8,7 @@ using API.Core.Model.ViewModels;
 using API.Core.Services.BASE;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +19,13 @@ namespace API.Core.Services
     {
         IBinArticleRepository _dal;
         IMapper _mapper;
-
-        public BinServices(IBinArticleRepository dal, IMapper mapper)
+        IRedisCacheManager _redisCacheManager;
+        public BinServices(IBinArticleRepository dal, IMapper mapper,IRedisCacheManager redisCacheManager)
         {
             this._dal = dal;
             base.baseDal = dal;
             this._mapper = mapper;
+            _redisCacheManager = redisCacheManager;
 
         }
 
@@ -49,7 +52,21 @@ namespace API.Core.Services
                     "Sn"
                 }
             };
-            return await FedExPage(doubleTable);
+            List<BinInfo> binInfos = new List<BinInfo>();
+
+            if (_redisCacheManager.Get<object>("Redis.Bin") != null)
+            {
+                binInfos = _redisCacheManager.Get<List<BinInfo>>("Redis.Bin");
+            }
+            else
+            {
+                binInfos = await FedExPage(doubleTable);
+                _redisCacheManager.Set("Redis.Bin", binInfos, TimeSpan.FromHours(2));
+            }
+
+          
+
+            return binInfos;
 
         }
 

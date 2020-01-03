@@ -17,8 +17,8 @@ namespace API.Core.Common.Redis
 
         public RedisCacheManager()
         {
-            string redisConfiguration = Appsettings.app(new string[] { "AppSettings", "RedisCachingAOP", "ConnectionString" });//获取连接字符串
-
+            //string redisConfiguration = Appsettings.app(new string[] { "AppSettings", "RedisCachingAOP", "ConnectionString" });//获取连接字符串
+            string redisConfiguration = "127.0.0.1:6379,password=";
             if (string.IsNullOrWhiteSpace(redisConfiguration))
             {
                 throw new ArgumentException("redis config is empty", nameof(redisConfiguration));

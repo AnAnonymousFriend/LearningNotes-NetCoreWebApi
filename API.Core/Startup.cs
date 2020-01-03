@@ -5,6 +5,7 @@ using System.Reflection;
 using API.Core.AOP;
 using API.Core.Common.Helper;
 using API.Core.Common.MemoryCache;
+using API.Core.Common.Redis;
 using API.Core.IServices;
 using API.Core.Services;
 using Autofac;
@@ -37,6 +38,7 @@ namespace API.Core
         {
             services.AddControllers();
             services.AddScoped<ICaching, MemoryCaching>();
+            services.AddScoped<IRedisCacheManager, RedisCacheManager>();
 
             services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
 
