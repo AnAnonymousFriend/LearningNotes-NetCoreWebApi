@@ -38,7 +38,6 @@ namespace API.Core.Common.Helper
         {
             try
             {
-
                 if (sections.Any())
                 {
                     return Configuration[string.Join(":", sections)];

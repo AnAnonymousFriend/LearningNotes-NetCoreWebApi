@@ -74,11 +74,6 @@ namespace API.Core
 
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
 
-            //直接注册某一个类和接口
-            //左边的是实现类，右边的As是接口
-            //builder.RegisterType<AdvertisementServices>().As<IAdvertisementServices>();
-            //builder.RegisterType<BinServices>().As<IBinServices>();
-
             #region 注册拦截器
             builder.RegisterType<BlogCacheAOP>();
             builder.RegisterType<BlogLogAOP>();

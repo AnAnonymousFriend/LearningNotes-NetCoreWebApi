@@ -40,6 +40,9 @@ namespace API.Core.Services
 
         public async Task<List<BinInfo>> TestGetBinList()
         {
+
+            throw new ArgumentNullException("发生异常");
+
             DoubleTable doubleTable = new DoubleTable
             {
                 LeftSurface = "BinInfo",
