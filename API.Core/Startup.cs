@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using API.Core.AOP;
 using API.Core.Common.Helper;
 using API.Core.Common.MemoryCache;
 using API.Core.Common.Redis;
-using API.Core.IServices;
-using API.Core.Services;
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using AutoMapper;
@@ -34,6 +31,7 @@ namespace API.Core
         
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Env { get; }
+
         // 服务注入
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,10 +39,12 @@ namespace API.Core
            
             services.AddSingleton(new Appsettings(Env.ContentRootPath));
             services.AddScoped<ICaching, MemoryCaching>();
-            //Redis
+            
+            // Redis
             services.AddScoped<IRedisCacheManager, RedisCacheManager>();
 
-            services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
+            // 这是AutoMapper的2.0新特性
+            services.AddAutoMapper(typeof(Startup));
 
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
             services.AddSwaggerGen(c =>
@@ -55,13 +55,16 @@ namespace API.Core
                     Version = "V1",
                     Title = $"{ApiName} 接口文档——Netcore 3.0",
                     Description = $"{ApiName} HTTP API V1",
-                    Contact = new OpenApiContact { Name = ApiName, Email = "API.Core@xxx.com", Url = new Uri("https://www.jianshu.com/u/94102b59cc2a") },
-                    License = new OpenApiLicense { Name = ApiName, Url = new Uri("https://www.jianshu.com/u/94102b59cc2a") }
+                    Contact = new OpenApiContact { Name = ApiName, Email = "API.Core@xxx.com"},
+                    License = new OpenApiLicense { Name = ApiName }
                 });
                 c.OrderActionsBy(o => o.RelativePath);
 
-                var xmlPath = Path.Combine(basePath, "API.Core.xml");//这个就是刚刚配置的xml文件名
-                c.IncludeXmlComments(xmlPath, true);//默认的第二个参数是false，这个是controller的注释，记得修改
+                //这个就是刚刚配置的xml文件名
+                var xmlPath = Path.Combine(basePath, "API.Core.xml");
+
+                //默认的第二个参数是false，这个是controller的注释，记得修改
+                c.IncludeXmlComments(xmlPath, true);
 
             });
             
