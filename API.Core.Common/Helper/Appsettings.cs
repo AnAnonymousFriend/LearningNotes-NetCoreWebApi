@@ -13,14 +13,13 @@ namespace API.Core.Common.Helper
     public class Appsettings
     {
         static IConfiguration Configuration { get; set; }
-        static string contentPath { get; set; }
 
         public Appsettings(string contentPath)
         {
             string Path = "appsettings.json";
 
             //如果你把配置文件 是 根据环境变量来分开了，可以这样写
-            //Path = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
+            //string Path = $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
 
             Configuration = new ConfigurationBuilder()
                .SetBasePath(contentPath)
@@ -45,7 +44,10 @@ namespace API.Core.Common.Helper
                     return Configuration[string.Join(":", sections)];
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex ) 
+            {
+                string a = ex.ToString();
+            }
 
             return "";
         }

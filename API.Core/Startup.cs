@@ -24,20 +24,24 @@ namespace API.Core
     {
         public string ApiName { get; set; } = "API.Core";
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
-     
 
 
+        
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public IWebHostEnvironment Env { get; }
+        // 服务注入
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+           
+            services.AddSingleton(new Appsettings(Env.ContentRootPath));
             services.AddScoped<ICaching, MemoryCaching>();
+            //Redis
             services.AddScoped<IRedisCacheManager, RedisCacheManager>();
 
             services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
@@ -64,6 +68,7 @@ namespace API.Core
 
         }
 
+       
         public void ConfigureContainer(ContainerBuilder builder)
         {
 
@@ -86,23 +91,11 @@ namespace API.Core
             var servicesDllFile = Path.Combine(basePath, "API.Core.Services.dll");
             var assemblysServices = Assembly.LoadFrom(servicesDllFile);
 
-            var cacheType = new List<Type>();
-            if (Appsettings.app(new string[] { "AppSettings", "MemoryCachingAOP", "Enabled" }).ObjToBool())
-            {
-                cacheType.Add(typeof(BlogCacheAOP));
-            }
-           
-            if (Appsettings.app(new string[] { "AppSettings", "LogAOP", "Enabled" }).ObjToBool())
-            {
-                cacheType.Add(typeof(BlogLogAOP));
-            }
-
-
             builder.RegisterAssemblyTypes(assemblysServices)
                       .AsImplementedInterfaces()
                       .InstancePerLifetimeScope()
                       .EnableInterfaceInterceptors()
-                      .InterceptedBy(cacheType.ToArray());
+                      .InterceptedBy(typeof(BlogLogAOP));
 
             // 注册仓储
             var repositoryDllFile = Path.Combine(basePath, "API.Core.Repository.dll");
@@ -111,13 +104,15 @@ namespace API.Core
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Configure 可将中间件组件添加到IApplicationBuilder 实例来配置请求管道
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
+                // 在开发环境中，使用异常页面，这样可以暴露错误堆栈信息，所以不要放在生产环境。
                 app.UseDeveloperExceptionPage();
-            }
+            else
+                app.UseExceptionHandler("/Error");
+            
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
