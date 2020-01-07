@@ -77,6 +77,14 @@
             配置构造函数，用来创建关系映射
             </summary>
         </member>
+        <member name="M:API.Core.Controllers.FileController.InsertPicture(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            上传图片,多文件，可以使用 postman 测试，
+            如果是单文件，可以 参数写 IFormFile file1
+            </summary>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
         <member name="M:API.Core.Controllers.WeatherForecastController.TestAdsFromAOP">
             <summary>
             测试AOP

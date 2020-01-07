@@ -31,8 +31,9 @@ namespace API.Core.Services
 
         public async Task<BinInfoViewModels> GetBinList()
         {
-            var blogArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
-            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(blogArticle);
+            var binArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
+
+            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
             return models;
         }
 
@@ -66,9 +67,6 @@ namespace API.Core.Services
                 binInfos = await FedExPage(doubleTable);
                 _redisCacheManager.Set("Redis.Bin", binInfos, TimeSpan.FromHours(2));
             }
-
-          
-
             return binInfos;
 
         }

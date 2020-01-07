@@ -13,7 +13,7 @@ namespace API.Core.Model
         /// <summary>
         /// 总页数
         /// </summary>
-        public int pageCount { get; set; } = 6;
+        public int pageCount { get; set; }
         /// <summary>
         /// 数据总数
         /// </summary>
