@@ -43,6 +43,7 @@ namespace API.Core.Controllers
             var allowType = new string[] { "image/jpg", "image/png", "image/jpeg" };
 
             string folderpath = Path.Combine(environment.WebRootPath, foldername);
+
             if (!Directory.Exists(folderpath))
             {
                 Directory.CreateDirectory(folderpath);
@@ -52,15 +53,20 @@ namespace API.Core.Controllers
             {
                 if (files.Sum(c => c.Length) <= 1024 * 1024 * 4)
                 {
+                    string strpath = string.Empty;
                     //foreach (var file in files)
-                    var file = files.FirstOrDefault();
-                    string strpath = Path.Combine(foldername, DateTime.Now.ToString("MMddHHmmss") + file.FileName);
-                    path = Path.Combine(environment.WebRootPath, strpath);
-
-                    using (var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                    foreach (var file in files)
                     {
-                        await file.CopyToAsync(stream);
+                        strpath = Path.Combine(foldername, DateTime.Now.ToString("MMddHHmmss") + file.FileName);
+                        path = Path.Combine(environment.WebRootPath, strpath);
+
+                        using (var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        {
+
+                            await file.CopyToAsync(stream);
+                        }
                     }
+
 
                     data = new MessageModel<string>()
                     {
