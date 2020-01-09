@@ -56,17 +56,23 @@ namespace API.Core.Controllers
                     strpath = Path.Combine(foldername, DateTime.Now.ToString("MMddHHmmss") + file.FileName);
                     path = Path.Combine(environment.WebRootPath, strpath);
 
-                    using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                    byte[] bytea = null;
+                    using (var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                     {
                         byte[] bytes = new byte[stream.Length];
                         stream.Read(bytes, 0, bytes.Length);
                         // 设置当前流的位置为流的开始 
                         stream.Seek(0, SeekOrigin.Begin);
-                        BinFiles binFiles = new BinFiles();                        
-                        binFiles.FileByte = bytes;
-                        await _binFileServices.Add(binFiles);
-                        await file.CopyToAsync(stream);
-                    }
+                        bytea = bytes;
+                    };
+                    
+                   
+                    BinFiles binFiles = new BinFiles
+                    {
+                        FileByte = bytea
+                    };
+                    await _binFileServices.Add(binFiles);
+                   
                 }
 
 

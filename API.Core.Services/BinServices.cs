@@ -20,7 +20,7 @@ namespace API.Core.Services
         IBinArticleRepository _dal;
         IMapper _mapper;
         IRedisCacheManager _redisCacheManager;
-        public BinServices(IBinArticleRepository dal, IMapper mapper,IRedisCacheManager redisCacheManager)
+        public BinServices(IBinArticleRepository dal, IMapper mapper, IRedisCacheManager redisCacheManager)
         {
             this._dal = dal;
             base.baseDal = dal;
@@ -50,7 +50,7 @@ namespace API.Core.Services
                 RightSurface = "OrderInfo",
                 RightKey = "Id",
                 ForeignKey = "order_id",
-                QueryField = new string[] 
+                QueryField = new string[]
                 {
                     "Pn",
                     "Sn"
@@ -71,7 +71,7 @@ namespace API.Core.Services
 
         }
 
-      
+
 
     }
 }
