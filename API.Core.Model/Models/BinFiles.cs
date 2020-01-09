@@ -5,6 +5,8 @@ using System.Text;
 
 namespace API.Core.Model.Models
 {
+    //对应数据库的BinInfo表
+    [SugarTable("Bin_File")]
     public class BinFiles
     {
         /// <summary>

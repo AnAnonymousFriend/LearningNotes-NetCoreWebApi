@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Core.Common.Helper;
 using API.Core.IServices;
 using API.Core.Model;
 using API.Core.Model.Models;
@@ -46,7 +47,6 @@ namespace API.Core.Controllers
             IFormFileCollection files = Request.Form.Files;
 
             if (files == null || !files.Any()) { data.Msg = "请选择上传的文件。"; return data; }
-
             if (files.Sum(c => c.Length) <= 1024 * 1024 * 4)
             {
                 string strpath = string.Empty;
@@ -56,23 +56,20 @@ namespace API.Core.Controllers
                     strpath = Path.Combine(foldername, DateTime.Now.ToString("MMddHHmmss") + file.FileName);
                     path = Path.Combine(environment.WebRootPath, strpath);
 
-                    byte[] bytea = null;
+                    FileInfo fi = new FileInfo(path);
+                    byte[] buff = new byte[fi.Length];
+
+                    FileStream fs = fi.OpenRead();
+                    fs.Read(buff, 0, Convert.ToInt32(fs.Length));
+                    fs.Close();
                     using (var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                     {
-                        byte[] bytes = new byte[stream.Length];
-                        stream.Read(bytes, 0, bytes.Length);
-                        // 设置当前流的位置为流的开始 
-                        stream.Seek(0, SeekOrigin.Begin);
-                        bytea = bytes;
+                       
+                        
+
+                        await file.CopyToAsync(stream);
+
                     };
-                    
-                   
-                    BinFiles binFiles = new BinFiles
-                    {
-                        FileByte = bytea
-                    };
-                    await _binFileServices.Add(binFiles);
-                   
                 }
 
 
@@ -91,5 +88,8 @@ namespace API.Core.Controllers
             }
 
         }
+
+
+       
     }
 }
