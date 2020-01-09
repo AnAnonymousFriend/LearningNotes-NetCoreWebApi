@@ -55,20 +55,9 @@ namespace API.Core.Controllers
                 {
                     strpath = Path.Combine(foldername, DateTime.Now.ToString("MMddHHmmss") + file.FileName);
                     path = Path.Combine(environment.WebRootPath, strpath);
-
-                    FileInfo fi = new FileInfo(path);
-                    byte[] buff = new byte[fi.Length];
-
-                    FileStream fs = fi.OpenRead();
-                    fs.Read(buff, 0, Convert.ToInt32(fs.Length));
-                    fs.Close();
                     using (var stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                     {
-                       
-                        
-
                         await file.CopyToAsync(stream);
-
                     };
                 }
 
