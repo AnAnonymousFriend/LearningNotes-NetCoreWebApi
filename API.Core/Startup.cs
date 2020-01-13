@@ -28,8 +28,6 @@ namespace API.Core
             Env = env;
         }
 
-
-        
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Env { get; }
 
@@ -37,19 +35,13 @@ namespace API.Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-           
             services.AddSingleton(new Appsettings(Env.ContentRootPath));
             services.AddScoped<ICaching, MemoryCaching>();
-            
             // Redis
             services.AddScoped<IRedisCacheManager, RedisCacheManager>();
-
-            // 这是AutoMapper的2.0新特性
-            services.AddAutoMapper(typeof(Startup));
-
+            // 添加对象映射
+            services.AddAutoMapperSetup();
             services.AddSwaggerSetup();
-
-
         }
 
        
@@ -94,6 +86,7 @@ namespace API.Core
             
 
             app.UseSwagger();
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint($"/swagger/V1/swagger.json", $"{ApiName} V1");
