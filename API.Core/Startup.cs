@@ -5,6 +5,7 @@ using API.Core.AOP;
 using API.Core.Common.Helper;
 using API.Core.Common.MemoryCache;
 using API.Core.Common.Redis;
+using API.Core.Extensions;
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using AutoMapper;
@@ -46,28 +47,8 @@ namespace API.Core
             // 这是AutoMapper的2.0新特性
             services.AddAutoMapper(typeof(Startup));
 
-            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("V1", new OpenApiInfo
-                {
-                    // {ApiName} 定义成全局变量，方便修改
-                    Version = "V1",
-                    Title = $"{ApiName} 接口文档——Netcore 3.0",
-                    Description = $"{ApiName} HTTP API V1",
-                    Contact = new OpenApiContact { Name = ApiName, Email = "API.Core@xxx.com"},
-                    License = new OpenApiLicense { Name = ApiName }
-                });
-                c.OrderActionsBy(o => o.RelativePath);
+            services.AddSwaggerSetup();
 
-                //这个就是刚刚配置的xml文件名
-                var xmlPath = Path.Combine(basePath, "API.Core.xml");
-
-                //默认的第二个参数是false，这个是controller的注释，记得修改
-                c.IncludeXmlComments(xmlPath, true);
-
-            });
-            
 
         }
 
