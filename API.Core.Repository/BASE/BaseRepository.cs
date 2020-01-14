@@ -31,6 +31,7 @@ namespace API.Core.Repository.BASE
             {
                 return await Task.Run(() => Db.Queryable<TEntity>().InSingle(objId));
             }
+
             /// <summary>
             /// 功能描述:根据ID查询一条数据
             /// 作　　者:Blog.Core
@@ -75,8 +76,7 @@ namespace API.Core.Repository.BASE
             public async Task<int> AddList(List<TEntity> insertObjs) 
             {
                 var i = await Task.Run(() => Db.Insertable(insertObjs.ToArray()).ExecuteReturnBigIdentity());
-                return (int)i;
-                
+                return (int)i;   
             }
 
 
@@ -392,6 +392,23 @@ namespace API.Core.Repository.BASE
 
             }
 
+
+            /// <summary>
+            /// 查询单表 动态where条件
+            /// </summary>
+            /// <param name="valuePairs">动态where条件</param>
+            /// <returns></returns>
+            public async Task<List<TEntity>> QueryCount(Dictionary<string,string> valuePairs)
+            {
+                var queryable = Db.Queryable<TEntity>();
+                foreach (var item in valuePairs)
+                {
+                    
+                    queryable.Where(it => it+"."+ item.Key == item.Value);
+                }
+                return await Task.Run(() => queryable.Clone().ToList());
+             
+            }
 
 
 
