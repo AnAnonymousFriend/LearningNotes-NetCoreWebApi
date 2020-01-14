@@ -67,6 +67,21 @@ namespace API.Core.Repository.BASE
             }
 
             /// <summary>
+            /// 批量插入
+            /// 注意 ： SqlSever 建表语句带有Wtih(设置)，如果设置不合理，可能会引起慢，把With删掉就会很快
+            /// </summary>
+            /// <param name="insertObjs"></param>
+            /// <returns></returns>
+            public async Task<int> AddList(List<TEntity> insertObjs) 
+            {
+                var i = await Task.Run(() => Db.Insertable(insertObjs.ToArray()).ExecuteReturnBigIdentity());
+                return (int)i;
+                
+            }
+
+
+
+            /// <summary>
             /// 更新实体数据
             /// </summary>
             /// <param name="entity">实体类</param>
@@ -244,7 +259,10 @@ namespace API.Core.Repository.BASE
                 int intTop,
                 string strOrderByFileds)
             {
-                return await Task.Run(() => Db.Queryable<TEntity>().OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds).WhereIF(!string.IsNullOrEmpty(strWhere), strWhere).Take(intTop).ToList());
+                return await Task.Run(() => Db.Queryable<TEntity>()
+                      .OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds)
+                      .WhereIF(!string.IsNullOrEmpty(strWhere), strWhere)
+                      .Take(intTop).ToList());
             }
 
 
@@ -282,7 +300,6 @@ namespace API.Core.Repository.BASE
               string strWhere,
               int intPageIndex,
               int intPageSize,
-
               string strOrderByFileds)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>().OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds).WhereIF(!string.IsNullOrEmpty(strWhere), strWhere).ToPageList(intPageIndex, intPageSize));
@@ -310,27 +327,6 @@ namespace API.Core.Repository.BASE
             public async Task<List<TEntity>> QuerySQL(string sql)
             {
                 return await Task.Run(() => Db.SqlQueryable<TEntity>(sql).ToList());
-            }
-
-            /// <summary>
-            /// 联表查询
-            /// </summary>
-            /// <typeparam name="TEntity1">实体类1</typeparam>
-            /// <typeparam name="TEntity2">实体类2</typeparam>
-            /// <param name="foreignKey">实体类1外键</param>
-            /// <param name="Id">实体类2主键</param>
-            /// <returns></returns>
-            public async Task<object> FedEx<TEntity1, TEntity2>(string foreignKey, string Id)
-            {
-                string relation = $"s1.{foreignKey} = s2.{Id}";
-                var TestSQl = Db.Queryable("BinInfo", "s1")
-                                              .AddJoinInfo("OrderInfo", "s2", relation)
-                                              .Select("s1.Sn").ToSql();
-
-                return await Task.Run(() => Db.Queryable("BinInfo", "s1")
-                                              .AddJoinInfo("OrderInfo", "s2", relation)
-                                              .Select("s1.Sn").ToSql()
-               );
             }
 
             /// <summary>
@@ -382,6 +378,24 @@ namespace API.Core.Repository.BASE
                                               .ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
                );
             }
+
+            /// <summary>
+            /// 查询行数
+            /// </summary>
+            /// <param name="whereExpression">查询条件</param>
+            /// <returns></returns>
+            public async Task<int> QueryCount(Expression<Func<TEntity, bool>> whereExpression) 
+            {
+                return await Task.Run(() => Db.Queryable<TEntity>()
+                                              .WhereIF(whereExpression != null, whereExpression)
+                                              .Count());
+
+            }
+
+
+
+
+
 
             /// <summary>
             /// 解析查询字段

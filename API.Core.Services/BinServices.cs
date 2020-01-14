@@ -31,12 +31,16 @@ namespace API.Core.Services
 
         public async Task<BinInfoViewModels> GetBinList()
         {
-            var binArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
+            //var binArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
 
-            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
+            //BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
+            //return models;
+
+            var binInFoList = await Query("10", 0, 10, "Id");
+            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binInFoList);
             return models;
         }
-
+       
 
 
         public async Task<List<BinInfo>> TestGetBinList()
