@@ -15,6 +15,6 @@ namespace API.Core.IServices
 
         Task<List<BinInfo>> TestGetBinList();
 
-       
+        Task<List<BinInfo>> DynamicBehaviour();
     }
 }

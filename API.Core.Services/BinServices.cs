@@ -1,5 +1,4 @@
-﻿using API.Core.Common.Helper;
-using API.Core.Common.Redis;
+﻿using API.Core.Common.Redis;
 using API.Core.IRepository;
 using API.Core.IServices;
 using API.Core.Model;
@@ -7,10 +6,8 @@ using API.Core.Model.Models;
 using API.Core.Model.ViewModels;
 using API.Core.Services.BASE;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Core.Services
@@ -75,7 +72,19 @@ namespace API.Core.Services
 
         }
 
+       
+
+        public async Task<List<BinInfo>> DynamicBehaviour()
+        {
+            var exp = SqlSugar.Expressionable.Create<BinInfo>()
+                                            .OrIF(1 == 1, it => it.Id == 1)
+                                            .And(it => it.Id == 1)
+                                            .AndIF(2 == 2, it => it.Id == 1)
+                                            .Or(it => it.BinType == "AO1").ToExpression();
+            var list =  await GetEntitiesAsync(exp);
+            return list;
 
 
+        }
     }
 }

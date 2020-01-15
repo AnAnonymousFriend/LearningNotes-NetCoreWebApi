@@ -276,6 +276,11 @@ namespace API.Core.Services.BASE
             return await baseDal.FedExPage(whereExpression,doubleTable);
         }
 
+       
+        public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression)
+        {
+            return await baseDal.GetEntitiesAsync(whereExpression);
+        }
 
     }
 

@@ -1,6 +1,7 @@
 ﻿using API.Core.Common.Helper;
 using API.Core.IRepository.BASE;
 using API.Core.Model;
+using API.Core.Model.Models;
 using API.Core.Repository.sugar;
 using SqlSugar;
 using System;
@@ -105,12 +106,7 @@ namespace API.Core.Repository.BASE
             }
 
             [Obsolete]
-            public async Task<bool> Update(
-              TEntity entity,
-              List<string> lstColumns = null,
-              List<string> lstIgnoreColumns = null,
-              string strWhere = ""
-                )
+            public async Task<bool> Update(TEntity entity, List<string> lstColumns = null, List<string> lstIgnoreColumns = null, string strWhere = "" )   
             {
                 IUpdateable<TEntity> up = await Task.Run(() => Db.Updateable(entity));
                 if (lstIgnoreColumns != null && lstIgnoreColumns.Count > 0)
@@ -411,17 +407,11 @@ namespace API.Core.Repository.BASE
             }
 
 
-            
-
-
-
-
-
-           
-
-
-         
-
+            // 动态拼接Lambda
+            public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression) 
+            {
+                return await Task.Run(() => Db.Queryable<TEntity>().Where(whereExpression).ToList());
+            }
 
         }
 

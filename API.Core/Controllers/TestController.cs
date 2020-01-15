@@ -56,6 +56,19 @@ namespace API.Core.Controllers
             return data;
         }
 
+        // GET: api/Test
+        [HttpGet]
+        [Route("DynamicBehaviour")]
+        public async Task<object> DynamicBehaviour()
+        {
+           
+            var model = await _binArticleServices.DynamicBehaviour();
+            var data = new { success = true, data = model };
+            return data;
+        }
+
+
+
         [HttpPost]
         [Route("AddBin")]
         public async Task<MessageModel<string>> AddBin([FromBody] BinInfo binInfo) 
