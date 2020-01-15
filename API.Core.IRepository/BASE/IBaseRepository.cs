@@ -46,5 +46,7 @@ namespace API.Core.IRepository.BASE
 
         Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, Model.DoubleTable doubleTable);
 
+        Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression);
+
     }
 }
