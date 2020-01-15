@@ -1,4 +1,5 @@
-﻿using API.Core.IRepository.BASE;
+﻿using API.Core.Common.Helper;
+using API.Core.IRepository.BASE;
 using API.Core.Model;
 using API.Core.Repository.sugar;
 using SqlSugar;
@@ -339,7 +340,7 @@ namespace API.Core.Repository.BASE
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
-                                              .Select<TEntity>(GetQueryField(doubleTable.QueryField))
+                                              .Select<TEntity>(MonogramHelper.GetQueryField(doubleTable.QueryField))
                                               .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
                                               .ToList()
                );
@@ -355,7 +356,7 @@ namespace API.Core.Repository.BASE
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
-                                              .Select<TEntity>(GetQueryField(doubleTable.QueryField))
+                                              .Select<TEntity>(MonogramHelper.GetQueryField(doubleTable.QueryField))
                                               .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
                                               .ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
                );
@@ -363,6 +364,7 @@ namespace API.Core.Repository.BASE
 
             /// <summary>
             /// 联表查询 
+            /// 默认查询全部 没有做查询字段优化
             /// </summary>
             /// <param name="whereExpression">条件表达式</param>
             /// <param name="doubleTable">联表参数</param>
@@ -402,39 +404,20 @@ namespace API.Core.Repository.BASE
             {
                 var queryable = Db.Queryable<TEntity>();
                 foreach (var item in valuePairs)
-                {
-                    
+                { 
                     queryable.Where(it => it+"."+ item.Key == item.Value);
                 }
                 return await Task.Run(() => queryable.Clone().ToList());
-             
             }
 
 
+            
 
 
 
-            /// <summary>
-            /// 解析查询字段
-            /// </summary>
-            /// <param name="QueryField"></param>
-            /// <returns></returns>
-            private string GetQueryField(string[] QueryField) 
-            {
-                if (QueryField!=null&&QueryField.Length>0)
-                {
-                    StringBuilder queryField = new StringBuilder();
-                    foreach (var item in QueryField)
-                    {
-                        queryField.Append(item + ",");
-                    }
 
-                    return queryField.ToString()[0..^1];
 
-                }
-                else
-                    return "*";
-            }
+           
 
 
          
