@@ -1,13 +1,11 @@
 ﻿using API.Core.Common.Helper;
 using API.Core.IRepository.BASE;
 using API.Core.Model;
-using API.Core.Model.Models;
 using API.Core.Repository.sugar;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace API.Core.Repository.BASE
@@ -413,9 +411,8 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable<TEntity>().Where(whereExpression).ToList());
             }
 
+
         }
-
-
     }
 
 

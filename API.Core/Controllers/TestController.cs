@@ -78,8 +78,10 @@ namespace API.Core.Controllers
 
             var id = (await _binArticleServices.Add(binInfo));
             data.Success = id > 0;
+            
             if (data.Success)
             {
+                data.Code = (int)CodeStatus.Success;
                 data.Response = id.ObjToString();
                 data.Msg = "添加成功";
             }

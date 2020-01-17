@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace API.Core.Repository.sugar
 {
@@ -14,6 +11,5 @@ namespace API.Core.Repository.sugar
         //public static string ConnectionString = ""; 
 
       
-
     }
 }
