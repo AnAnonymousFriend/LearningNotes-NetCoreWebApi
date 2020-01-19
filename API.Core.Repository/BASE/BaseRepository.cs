@@ -411,6 +411,14 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable<TEntity>().Where(whereExpression).ToList());
             }
 
+            public async Task<bool> UpdateList(List<TEntity> list) 
+            {
+               
+                return await Task.Run(() => Db.Updateable(list).ExecuteCommand());
+               
+            }
+
+
 
         }
     }
