@@ -19,9 +19,7 @@ DoubleTable 为参数实体类 包含需查询表的名称，外联表及关联�
 
 
 
-https://github.com/AnAnonymousFriend/LearningNotes-NetCoreWebApi/blob/master/Img/PathGenerated.png
-
-![image-20200130105335359](C:\Users\kai_wang\AppData\Roaming\Typora\typora-user-images\image-20200130105335359.png)
+https://github.com/AnAnonymousFriend/LearningNotes-NetCoreWebApi/blob/master/docs/Img/release.png
 
 可能原因1：
 
