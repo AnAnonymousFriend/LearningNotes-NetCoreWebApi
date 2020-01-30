@@ -14,12 +14,10 @@ DoubleTable 为参数实体类 包含需查询表的名称，外联表及关联�
 如果直接右键属性——发布。将编译过后的文件上传到服务器上，很可能无法启动！
 
 ```
-![发布图片](./docs/Img/release.png.png)
+![发布图片](https://github.com/AnAnonymousFriend/LearningNotes-NetCoreWebApi/blob/master/docs/Img/release.png)
 ```
 
 
-
-https://github.com/AnAnonymousFriend/LearningNotes-NetCoreWebApi/blob/master/docs/Img/release.png
 
 可能原因1：
 
