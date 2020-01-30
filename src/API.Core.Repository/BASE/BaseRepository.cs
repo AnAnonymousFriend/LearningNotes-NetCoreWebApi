@@ -411,11 +411,14 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable<TEntity>().Where(whereExpression).ToList());
             }
 
+            /// <summary>
+            /// 批量修改
+            /// </summary>
+            /// <param name="list"></param>
+            /// <returns></returns>
             public async Task<bool> UpdateList(List<TEntity> list) 
-            {
-               
-                return await Task.Run(() => Db.Updateable(list).ExecuteCommand());
-               
+            { 
+                return await Task.Run(() => Db.Updateable(list).ExecuteCommand()>0?true:false);
             }
 
 
