@@ -10,6 +10,6 @@ namespace API.Core.Repository.sugar
 
         //public static string ConnectionString = ""; 
 
-      
+
     }
 }
