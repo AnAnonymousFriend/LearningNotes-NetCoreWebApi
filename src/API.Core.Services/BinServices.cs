@@ -5,6 +5,8 @@ using API.Core.Model;
 using API.Core.Model.Models;
 using API.Core.Model.ViewModels;
 using API.Core.Services.BASE;
+using API.Core.Services.ModulePlant;
+using API.Core.Services.ModulePlant.Factory;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -33,11 +35,14 @@ namespace API.Core.Services
             //BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
             //return models;
 
-            var binInFoList = await Query("10", 0, 10, "Id");
-            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binInFoList);
-            return models;
+            
+            CreateBinFile();
+            return null;
+            //var binInFoList = await Query("10", 0, 10, "Id");
+            //BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binInFoList);
+            //return models;
         }
-       
+
 
 
         public async Task<List<BinInfo>> TestGetBinList()
@@ -72,7 +77,7 @@ namespace API.Core.Services
 
         }
 
-       
+
 
         public async Task<List<BinInfo>> DynamicBehaviour()
         {
@@ -83,7 +88,7 @@ namespace API.Core.Services
                                              .OrIF(true, it => it.Id == 1)
                                              .And(it => it.BinType == "SFP")
                                              .ToExpression();
-            var list =  await GetEntitiesAsync(exp);
+            var list = await GetEntitiesAsync(exp);
             return list;
 
 
@@ -91,9 +96,17 @@ namespace API.Core.Services
 
 
 
-        public async void CreateBinFile() 
+        public void CreateBinFile()
         {
-        
+            AbstractFactory boxfactory = new BoxFactory();
+            BInFile boxbinFile = boxfactory.CreateBinFile();
+            boxbinFile.CreateBinFile();
+
+            AbstractFactory osfactory = new OsFactory();
+            BInFile osbinFile = osfactory.CreateBinFile();
+            osbinFile.CreateBinFile();
+
+
         }
 
     }
