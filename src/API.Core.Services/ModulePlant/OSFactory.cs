@@ -5,11 +5,13 @@ using System.Text;
 
 namespace API.Core.Services.ModulePlant
 {
-    public class OSFactory: AbstractFactory
+    public class OsFactory: AbstractFactory
     {
         public override BInFile CreateBinFile()
-          {
-             return new NanChangYaBo();
+        {
+          
+            return new OsBinFile();
+         
         }
 
 }

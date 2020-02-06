@@ -4,11 +4,12 @@ using System.Text;
 
 namespace API.Core.Services.ModulePlant
 {
-    public class BoxBinFile:BInFile
+    // os 创建bin文件的具体实现类
+    public class OsBinFile : BInFile
     {
         public override void CreateBinFile()
         {
-            Console.WriteLine("Box 创建bin文件");
+            Console.WriteLine("OS 创建bin文件");
         }
     }
 }

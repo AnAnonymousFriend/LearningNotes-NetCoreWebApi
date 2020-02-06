@@ -88,5 +88,13 @@ namespace API.Core.Services
 
 
         }
+
+
+
+        public async void CreateBinFile() 
+        {
+        
+        }
+
     }
 }

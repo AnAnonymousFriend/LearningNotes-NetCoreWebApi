@@ -8,6 +8,7 @@ namespace API.Core.Services.ModulePlant.Factory
     // 抽象方法 创建bin文件
     public abstract class AbstractFactory
     {
-        public abstract object CreateBinFile();
+        public abstract BInFile CreateBinFile();
+     
     }
 }
