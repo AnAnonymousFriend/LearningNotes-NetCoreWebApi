@@ -48,5 +48,8 @@ namespace API.Core.IRepository.BASE
 
         Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression);
 
+        Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs);
+
+
     }
 }

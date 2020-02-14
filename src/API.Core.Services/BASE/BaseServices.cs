@@ -282,6 +282,11 @@ namespace API.Core.Services.BASE
             return await baseDal.GetEntitiesAsync(whereExpression);
         }
 
+        public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs) 
+        {
+            return await baseDal.DynamicWhereByLits(pairs);
+        }
+
     }
 
 }

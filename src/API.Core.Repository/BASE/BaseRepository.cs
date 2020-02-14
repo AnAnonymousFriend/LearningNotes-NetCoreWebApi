@@ -380,7 +380,7 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="whereExpression">查询条件</param>
             /// <returns></returns>
-            public async Task<int> DynamicWhereByLits(Expression<Func<TEntity, bool>> whereExpression) 
+            public async Task<int> TableCount(Expression<Func<TEntity, bool>> whereExpression) 
             {
                 return await Task.Run(() => Db.Queryable<TEntity>()
                                               .WhereIF(whereExpression != null, whereExpression)

@@ -52,6 +52,6 @@ namespace API.Core.IServices.BASE
 
         Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, Model.DoubleTable doubleTable);
 
-
+        Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs);
     }
 }
