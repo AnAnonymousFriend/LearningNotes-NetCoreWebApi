@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace API.Core.Services.ModulePlant
+﻿namespace API.Core.Services.ModulePlant
 {
     public  abstract class BInFile
     {

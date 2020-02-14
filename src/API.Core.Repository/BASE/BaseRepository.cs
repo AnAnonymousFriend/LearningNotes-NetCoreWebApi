@@ -380,7 +380,7 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="whereExpression">查询条件</param>
             /// <returns></returns>
-            public async Task<int> QueryCount(Expression<Func<TEntity, bool>> whereExpression) 
+            public async Task<int> DynamicWhereByLits(Expression<Func<TEntity, bool>> whereExpression) 
             {
                 return await Task.Run(() => Db.Queryable<TEntity>()
                                               .WhereIF(whereExpression != null, whereExpression)
@@ -394,14 +394,14 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="valuePairs">动态where条件</param>
             /// <returns></returns>
-            public async Task<List<TEntity>> QueryCount(Dictionary<string,string> valuePairs)
+            public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs)
             {
-                var queryable = Db.Queryable<TEntity>();
-                foreach (var item in valuePairs)
-                { 
-                    queryable.Where(it => it+"."+ item.Key == item.Value);
+                List<IConditionalModel> conModels = new List<IConditionalModel>();
+                foreach (var item in pairs)
+                {
+                    conModels.Add(new ConditionalModel() { FieldName = item.Key, ConditionalType = ConditionalType.Equal, FieldValue = item.Value });
                 }
-                return await Task.Run(() => queryable.Clone().ToList());
+                return await Task.Run(() => Db.Queryable<TEntity>().Where(conModels).ToList());
             }
 
 
