@@ -454,6 +454,29 @@ namespace API.Core.Repository.BASE
             }
 
 
+
+            /// <summary>
+            /// 批量修改
+            /// </summary>
+            /// <param name="list"></param>
+            /// <returns></returns>
+            public async Task<bool> UpdateList(List<TEntity> list)
+            {
+                return await Task.Run(() => Db.Updateable(list).ExecuteCommand() > 0 ? true : false);
+            }
+
+            /// <summary>
+            /// 批量添加
+            /// </summary>
+            /// <param name="entities"></param>
+            /// <returns></returns>
+            public async Task<int> AddListEntity(List<TEntity> entities)
+            {
+                return await Task.Run(() => Db.Insertable(entities.ToArray()).ExecuteCommand());
+            }
+
+
+
         }
     }
 
