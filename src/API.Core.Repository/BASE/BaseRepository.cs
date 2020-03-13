@@ -421,6 +421,37 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Updateable(list).ExecuteCommand()>0?true:false);
             }
 
+            /// <summary>
+            /// 动态查询表达式
+            /// </summary>
+            /// <param name="pairs"></param>
+            /// <returns></returns>
+            public async Task<List<TEntity>> DynamicWhereByList(Dictionary<string, string> pairs)
+            {
+                List<IConditionalModel> conModels = new List<IConditionalModel>();
+                foreach (var item in pairs)
+                {
+                    conModels.Add(new ConditionalModel()
+                    {
+                        FieldName = item.Key,
+                        ConditionalType = ConditionalType.Equal,
+                        FieldValue = item.Value
+                    });
+                }
+                var strsql = await Task.Run(() => Db.Queryable<TEntity>().Where(conModels).ToSql().ToString());
+                return await Task.Run(() => Db.Queryable<TEntity>().Where(conModels).ToList());
+            }
+
+            /// <summary>
+            /// 查询行数
+            /// </summary>
+            /// <param name="whereExpression">查询条件</param>
+            /// <returns></returns>
+            public async Task<int> QueryCount(string strWhere)
+            {
+                return await Task.Run(() => Db.Queryable<TEntity>()
+                                            .WhereIF(!string.IsNullOrEmpty(strWhere), strWhere).Count());
+            }
 
 
         }
