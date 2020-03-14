@@ -412,16 +412,6 @@ namespace API.Core.Repository.BASE
             }
 
             /// <summary>
-            /// 批量修改
-            /// </summary>
-            /// <param name="list"></param>
-            /// <returns></returns>
-            public async Task<bool> UpdateList(List<TEntity> list) 
-            { 
-                return await Task.Run(() => Db.Updateable(list).ExecuteCommand()>0?true:false);
-            }
-
-            /// <summary>
             /// 动态查询表达式
             /// </summary>
             /// <param name="pairs"></param>
