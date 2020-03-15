@@ -24,7 +24,17 @@ namespace QuickstartIdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            //services.AddControllers();
+            //services.AddIdentityServer()
+            //        .AddDeveloperSigningCredential();
+
+
+            var builder = services.AddIdentityServer()
+                                  .AddDeveloperSigningCredential()
+                                  .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                                  .AddInMemoryApiResources(Config.GetApis())
+                                  .AddInMemoryClients(Config.GetClients());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,14 +45,23 @@ namespace QuickstartIdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            //app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
+
+
+
+            // uncomment if you want to support static files
+            //app.UseStaticFiles();
+
+            app.UseIdentityServer();
+
+
         }
     }
 }
