@@ -24,16 +24,17 @@ namespace QuickstartIdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddControllers();
-            //services.AddIdentityServer()
-            //        .AddDeveloperSigningCredential();
-
-
             var builder = services.AddIdentityServer()
-                                  .AddDeveloperSigningCredential()
-                                  .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                                  .AddInMemoryApiResources(Config.GetApis())
-                                  .AddInMemoryClients(Config.GetClients());
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiResources(Config.GetApis())
+                .AddInMemoryClients(Config.GetClients())
+                .AddTestUsers(Config.GetUsers());
+
+            //var builder = services.AddIdentityServer()
+            //                      .AddDeveloperSigningCredential()
+            //                      .AddInMemoryIdentityResources(Config.GetIdentityResources())
+            //                      .AddInMemoryApiResources(Config.GetApis())
+            //                      .AddInMemoryClients(Config.GetClients());
 
         }
 
@@ -45,19 +46,6 @@ namespace QuickstartIdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseRouting();
-
-            //app.UseAuthorization();
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
-
-
-
-            // uncomment if you want to support static files
-            //app.UseStaticFiles();
 
             app.UseIdentityServer();
 
