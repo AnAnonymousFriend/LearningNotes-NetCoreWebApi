@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    class Program
+    public class Program
     {
-        private static async Task Main()
+        public static void Main(string[] args) => MainAsync().GetAwaiter().GetResult();
+
+        private static async Task MainAsync()
         {
             // discover endpoints from metadata
-            var client = new HttpClient();
-
-            var disco = await client.GetDiscoveryDocumentAsync("http://localhost:5000");
+            var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
             if (disco.IsError)
             {
                 Console.WriteLine(disco.Error);
@@ -21,14 +21,8 @@ namespace Client
             }
 
             // request token
-            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-            {
-                Address = disco.TokenEndpoint,
-                ClientId = "client",
-                ClientSecret = "secret",
-
-                Scope = "api1"
-            });
+            var tokenClient = new TokenClient(disco.TokenEndpoint, "client", "secret");
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
 
             if (tokenResponse.IsError)
             {
@@ -40,10 +34,10 @@ namespace Client
             Console.WriteLine("\n\n");
 
             // call api
-            var apiClient = new HttpClient();
-            apiClient.SetBearerToken(tokenResponse.AccessToken);
+            var client = new HttpClient();
+            client.SetBearerToken(tokenResponse.AccessToken);
 
-            var response = await apiClient.GetAsync("http://localhost:5002/identity");
+            var response = await client.GetAsync("http://localhost:5001/identity");
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine(response.StatusCode);
@@ -53,9 +47,6 @@ namespace Client
                 var content = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(JArray.Parse(content));
             }
-
-
-            Console.ReadKey();
         }
     }
 }
