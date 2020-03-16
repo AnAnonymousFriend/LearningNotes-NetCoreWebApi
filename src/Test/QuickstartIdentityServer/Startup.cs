@@ -24,17 +24,14 @@ namespace QuickstartIdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = services.AddIdentityServer()
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApis())
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryIdentityResources(Config.GetIdentityResourceResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
-                .AddTestUsers(Config.GetUsers());
-
-            //var builder = services.AddIdentityServer()
-            //                      .AddDeveloperSigningCredential()
-            //                      .AddInMemoryIdentityResources(Config.GetIdentityResources())
-            //                      .AddInMemoryApiResources(Config.GetApis())
-            //                      .AddInMemoryClients(Config.GetClients());
+                .AddTestUsers(Config.GetUsers())
+                .AddProfileService<CustomProfileService>()
+                .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>();
 
         }
 
