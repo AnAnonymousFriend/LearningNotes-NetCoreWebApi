@@ -10,6 +10,7 @@ using API.Core.Services.ModulePlant.Factory;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Core.Services
@@ -30,17 +31,10 @@ namespace API.Core.Services
 
         public async Task<BinInfoViewModels> GetBinList()
         {
-            //var binArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
+            var binArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
 
-            //BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
-            //return models;
-
-            
-            CreateBinFile();
-            return null;
-            //var binInFoList = await Query("10", 0, 10, "Id");
-            //BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binInFoList);
-            //return models;
+            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
+            return models;
         }
 
 
@@ -95,19 +89,24 @@ namespace API.Core.Services
         }
 
 
-
+        /// <summary>
+        ///  抽象工厂类
+        /// </summary>
         public void CreateBinFile()
         {
+            // box 找码逻辑
             AbstractFactory boxfactory = new BoxFactory();
             BInFile boxbinFile = boxfactory.CreateBinFile();
             boxbinFile.CreateBinFile();
 
+            // os 找码逻辑
             AbstractFactory osfactory = new OsFactory();
             BInFile osbinFile = osfactory.CreateBinFile();
             osbinFile.CreateBinFile();
-
-
         }
+
+      
+
 
     }
 }

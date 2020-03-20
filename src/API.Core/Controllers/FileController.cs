@@ -27,10 +27,6 @@ namespace API.Core.Controllers
             this._binFileServices = BinFileServices;
         }
 
-
-
-
-
         /// <summary>
         /// 上传图片,多文件，可以使用 postman 测试，
         /// 如果是单文件，可以 参数写 IFormFile file1

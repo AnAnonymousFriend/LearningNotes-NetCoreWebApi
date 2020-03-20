@@ -21,6 +21,11 @@ namespace API.Core.Controllers
         private readonly IBinServices _binArticleServices;
         private readonly ILogger<TestController> _logger;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="BindvertisementServices">注册bin服务</param>
+        /// <param name="logger">注册日志</param>
         public TestController(IBinServices BindvertisementServices, ILogger<TestController> logger)
         {
             _logger = logger;
@@ -28,8 +33,8 @@ namespace API.Core.Controllers
         }
 
 
-        // GET: api/Test
-        [HttpGet]
+       
+        [HttpGet] // GET: api/Test
         public async Task<object> GetAsync()
         {
            
@@ -38,6 +43,10 @@ namespace API.Core.Controllers
             return data;
         }
 
+        /// <summary>
+        /// 查询所有
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
         public async Task<List<BinInfo>> GetAll()
@@ -46,19 +55,25 @@ namespace API.Core.Controllers
             return model;
         }
 
-
+        /// <summary>
+        /// 测试方法
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Test
         [HttpGet]
         [Route("LeagueTableTest")]
-        public async Task<object> LeagueTableTest()
+        public async Task<ActionResult<IEnumerable<BinInfo>>> LeagueTableTest()
         {
             //调用该方法，这里 _blogArticleServices 是依赖注入的实例，不是类
-            var model = await _binArticleServices.TestGetBinList();
+            List<BinInfo> model = await _binArticleServices.TestGetBinList();
             var data = new { success = true, data = model };
-            return data;
+            return model;
         }
 
-        // GET: api/Test
+        /// <summary>
+        /// 动态表达式调取
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("DynamicBehaviour")]
         public async Task<object> DynamicBehaviour()
@@ -70,7 +85,11 @@ namespace API.Core.Controllers
         }
 
 
-
+        /// <summary>
+        /// 添加操作
+        /// </summary>
+        /// <param name="binInfo"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddBin")]
         public async Task<MessageModel<string>> AddBin([FromBody] BinInfo binInfo) 

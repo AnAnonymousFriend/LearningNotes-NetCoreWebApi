@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace API.Core.Model.ViewModels
+﻿namespace API.Core.Model.ViewModels
 {
     public class BinInfoViewModels
     {

@@ -31,46 +31,16 @@
             <param name="password"></param>
             <returns></returns>
         </member>
-        <member name="T:API.Core.AOP.BlogCacheAOP">
-            <summary>
-            面向切面的缓存使用
-            </summary>
-        </member>
-        <member name="T:API.Core.AOP.BlogLogAOP">
+        <member name="T:API.Core.AOP.LogAOP">
             <summary>
             拦截器BlogLogAOP 继承IInterceptor接口
             </summary>
         </member>
-        <member name="M:API.Core.AOP.BlogLogAOP.Intercept(Castle.DynamicProxy.IInvocation)">
+        <member name="M:API.Core.AOP.LogAOP.Intercept(Castle.DynamicProxy.IInvocation)">
             <summary>
             实例化IInterceptor唯一方法 
             </summary>
             <param name="invocation">包含被拦截方法的信息</param>
-        </member>
-        <member name="T:API.Core.AOP.BlogRedisCacheAOP">
-            <summary>
-            面向切面的缓存使用
-            </summary>
-        </member>
-        <member name="M:API.Core.AOP.CacheAOPbase.Intercept(Castle.DynamicProxy.IInvocation)">
-            <summary>
-            AOP的拦截方法
-            </summary>
-            <param name="invocation"></param>
-        </member>
-        <member name="M:API.Core.AOP.CacheAOPbase.CustomCacheKey(Castle.DynamicProxy.IInvocation)">
-            <summary>
-            自定义缓存的key
-            </summary>
-            <param name="invocation"></param>
-            <returns></returns>
-        </member>
-        <member name="M:API.Core.AOP.CacheAOPbase.GetArgumentValue(System.Object)">
-            <summary>
-            object 转 string
-            </summary>
-            <param name="arg"></param>
-            <returns></returns>
         </member>
         <member name="T:API.Core.AutoMapper.AutoMapperConfig">
             <summary>
@@ -88,6 +58,38 @@
             如果是单文件，可以 参数写 IFormFile file1
             </summary>
             <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Core.Controllers.TestController.#ctor(API.Core.IServices.IBinServices,Microsoft.Extensions.Logging.ILogger{API.Core.Controllers.TestController})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="BindvertisementServices">注册bin服务</param>
+            <param name="logger">注册日志</param>
+        </member>
+        <member name="M:API.Core.Controllers.TestController.GetAll">
+            <summary>
+            查询所有
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Core.Controllers.TestController.LeagueTableTest">
+            <summary>
+            测试方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Core.Controllers.TestController.DynamicBehaviour">
+            <summary>
+            动态表达式调取
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Core.Controllers.TestController.AddBin(API.Core.Model.Models.BinInfo)">
+            <summary>
+            添加操作
+            </summary>
+            <param name="binInfo"></param>
             <returns></returns>
         </member>
         <member name="T:API.Core.Extensions.AutoMapperSetup">

@@ -51,8 +51,8 @@ namespace API.Core
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
 
             #region ×¢²áÀ¹½ØÆ÷
-            builder.RegisterType<BlogCacheAOP>();
-            builder.RegisterType<BlogLogAOP>();
+            
+            builder.RegisterType<LogAOP>();
             #endregion
 
 
@@ -66,7 +66,7 @@ namespace API.Core
                       .AsImplementedInterfaces()
                       .InstancePerLifetimeScope()
                       .EnableInterfaceInterceptors()
-                      .InterceptedBy(typeof(BlogLogAOP));
+                      .InterceptedBy(typeof(LogAOP));
 
             // ×¢²á²Ö´¢
             var repositoryDllFile = Path.Combine(basePath, "API.Core.Repository.dll");

@@ -14,7 +14,7 @@ namespace API.Core.AOP
         /// <summary>
         /// 拦截器BlogLogAOP 继承IInterceptor接口
         /// </summary>
-        public class BlogLogAOP : IInterceptor
+        public class LogAOP : IInterceptor
         {
             /// <summary>
             /// 实例化IInterceptor唯一方法 
