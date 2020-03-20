@@ -90,12 +90,6 @@
             <param name="environment"></param>
             <returns></returns>
         </member>
-        <member name="M:API.Core.Controllers.WeatherForecastController.TestAdsFromAOP">
-            <summary>
-            测试AOP
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:API.Core.Extensions.AutoMapperSetup">
             <summary>
             Automapper 启动服务

@@ -19,12 +19,12 @@ namespace API.Core.Controllers
 
        
         private readonly IBinServices _binArticleServices;
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<TestController> _logger;
 
-        public TestController(IBinServices BindvertisementServices, ILogger<WeatherForecastController> logger)
+        public TestController(IBinServices BindvertisementServices, ILogger<TestController> logger)
         {
             _logger = logger;
-            this._binArticleServices = BindvertisementServices;
+            _binArticleServices = BindvertisementServices;
         }
 
 
