@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Reflection;
 using API.Core.AOP;
@@ -8,19 +7,19 @@ using API.Core.Common.Redis;
 using API.Core.Extensions;
 using Autofac;
 using Autofac.Extras.DynamicProxy;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace API.Core
 {
     public class Startup
     {
         public string ApiName { get; set; } = "API.Core";
+        public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -28,8 +27,7 @@ namespace API.Core
             Env = env;
         }
 
-        public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Env { get; }
+      
 
         // 服务注入
         public void ConfigureServices(IServiceCollection services)
@@ -41,6 +39,7 @@ namespace API.Core
             services.AddScoped<IRedisCacheManager, RedisCacheManager>();
             // 添加对象映射
             services.AddAutoMapperSetup();
+            // 添加Swagger
             services.AddSwaggerSetup();
         }
 
@@ -51,12 +50,9 @@ namespace API.Core
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
 
             #region 注册拦截器
-            
             builder.RegisterType<LogAOP>();
             #endregion
 
-
-            //注册要通过反射创建的组件
 
             // 注册服务层
             var servicesDllFile = Path.Combine(basePath, "API.Core.Services.dll");
@@ -86,19 +82,17 @@ namespace API.Core
             
 
             app.UseSwagger();
-
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint($"/swagger/V1/swagger.json", $"{ApiName} V1");
 
-                //路径配置，设置为空，表示直接在根域名（localhost:8001）访问该文件,注意localhost:8001/swagger是访问不到的，去launchSettings.json把launchUrl去掉，如果你想换一个路径，直接写名字即可，比如直接写c.RoutePrefix = "doc";
+                // 路径配置，设置为空，表示直接在根域名（localhost:8001）访问该文件,注意localhost:8001/swagger是访问不到的。
+                // 去launchSettings.json把launchUrl去掉，如果你想换一个路径，直接写名字即可，比如直接写c.RoutePrefix = "doc";
                 c.RoutePrefix = "";
             });
 
             app.UseRouting();
-          
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
