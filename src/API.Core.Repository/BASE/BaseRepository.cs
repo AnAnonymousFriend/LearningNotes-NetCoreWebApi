@@ -281,6 +281,21 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable<TEntity>().OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds).WhereIF(whereExpression != null, whereExpression).ToPageList(intPageIndex, intPageSize));
             }
 
+
+            /// <summary>
+            /// 功能描述:单表分页查询
+            /// </summary>
+            /// <param name="intPageIndex">页码（下标0）</param>
+            /// <param name="intPageSize">页大小</param>
+            /// <param name="intTotalCount">数据总量</param>
+            /// <returns>数据列表</returns>
+            public async Task<List<TEntity>> Query(int intPageIndex,int intPageSize)
+            {
+                return await Task.Run(() => Db.Queryable<TEntity>()
+                                            .ToPageList(intPageIndex, intPageSize));
+            }
+
+
             /// <summary>
             /// 功能描述:分页查询
             /// 作　　者:Blog.Core

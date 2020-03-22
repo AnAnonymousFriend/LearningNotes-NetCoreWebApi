@@ -10,7 +10,7 @@ namespace API.Core.Services.BASE
     public class BaseServices<TEntity> : IBaseServices<TEntity> where TEntity : class, new()
     {
         public IBaseRepository<TEntity> baseDal;
-        
+
 
         public async Task<TEntity> QueryByID(object objId)
         {
@@ -219,6 +219,22 @@ namespace API.Core.Services.BASE
         }
 
         /// <summary>
+        /// 功能描述:单表分页查询
+        /// 作　　者:AZLinli.Blog.Core
+        /// </summary>
+        /// <param name="whereExpression">条件表达式</param>
+        /// <param name="intPageIndex">页码（下标0）</param>
+        /// <param name="intPageSize">页大小</param>
+        /// <param name="intTotalCount">数据总量</param>
+        /// <param name="strOrderByFileds">排序字段，如name asc,age desc</param>
+        /// <returns>数据列表</returns>
+        public async Task<List<TEntity>> Query(int intPageIndex, int intPageSize)
+        {
+            return await baseDal.Query(intPageIndex,intPageSize);
+        }
+
+
+        /// <summary>
         /// 功能描述:分页查询
         /// 作　　者:AZLinli.Blog.Core
         /// </summary>
@@ -244,8 +260,8 @@ namespace API.Core.Services.BASE
         public async Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression,
         int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
         {
-            return await baseDal.QueryPage(whereExpression,
-         intPageIndex = 0, intPageSize, strOrderByFileds);
+            return await baseDal.QueryPage(whereExpression, intPageIndex = 0, intPageSize, strOrderByFileds);
+
         }
 
 
@@ -273,16 +289,16 @@ namespace API.Core.Services.BASE
 
         public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, Model.DoubleTable doubleTable)
         {
-            return await baseDal.FedExPage(whereExpression,doubleTable);
+            return await baseDal.FedExPage(whereExpression, doubleTable);
         }
 
-       
+
         public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression)
         {
             return await baseDal.GetEntitiesAsync(whereExpression);
         }
 
-        public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs) 
+        public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs)
         {
             return await baseDal.DynamicWhereByLits(pairs);
         }

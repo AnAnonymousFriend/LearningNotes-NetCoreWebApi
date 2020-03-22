@@ -29,9 +29,19 @@ namespace API.Core.Services
 
         }
 
-        public async Task<BinInfoViewModels> GetBinList()
+        // id查询
+        public async Task<BinInfoViewModels> GetBinList(int id)
         {
-            var binArticle = (await Query(a => a.Id == 18)).FirstOrDefault();
+            var binArticle = (await Query(a => a.Id == id)).FirstOrDefault();
+
+            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
+            return models;
+        }
+
+
+        public async Task<BinInfoViewModels> GetBinList() 
+        {
+            var binArticle = await Query(1,10);
 
             BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
             return models;
@@ -72,7 +82,7 @@ namespace API.Core.Services
         }
 
 
-
+        // 动态条件查询
         public async Task<List<BinInfo>> DynamicBehaviour()
         {
             // OrIF中第一个参数为bool类型 可写判断
