@@ -6,7 +6,7 @@ using System.Text;
 namespace API.Core.Model.Models
 {
     //对应数据库的BinInfo表
-    [SugarTable("BinInfo")]
+    [SugarTable("bin_Info")]
     public class BinInfo
     {
         /// <summary>
@@ -45,7 +45,7 @@ namespace API.Core.Model.Models
         /// <summary>
         /// Isddm
         /// </summary>
-       [SugarColumn(ColumnName = "is_ddm")]
+        [SugarColumn(ColumnName = "is_ddm")]
         public bool Isddm { get; set; }
 
 
@@ -82,6 +82,21 @@ namespace API.Core.Model.Models
         /// version 版本
         /// </summary>
         public DateTime CreateTime { get; set; }
+        /// <summary>
+        /// BinByte bin文件
+        /// </summary>
+        [SugarColumn(ColumnDataType = "varchar", Length = 1024, IsNullable = true, ColumnName = "bin_Byte")]
+        public string BinByte { get; set; }
+
+        /// <summary>
+        /// 是否软删除  0 false  1 true
+        /// </summary>
+        public int IsDel { get; set; }
+
+        /// <summary>
+        /// 上传日期
+        /// </summary>
+        public string UploadDate { get; set; }
 
     }
 }

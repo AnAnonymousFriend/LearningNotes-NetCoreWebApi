@@ -22,16 +22,16 @@ namespace API.Core.Services
         IRedisCacheManager _redisCacheManager;
         public BinServices(IBinArticleRepository dal, IMapper mapper, IRedisCacheManager redisCacheManager)
         {
-            this._dal = dal;
-            base.baseDal = dal;
-            this._mapper = mapper;
+            _dal = dal;
+            baseDal = dal;
+            _mapper = mapper;
             _redisCacheManager = redisCacheManager;
 
         }
 
         public async Task<BinInfoViewModels> GetBinList()
         {
-            var binArticle = (await Query(a => a.Id == 1)).FirstOrDefault();
+            var binArticle = (await Query(a => a.Id == 18)).FirstOrDefault();
 
             BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
             return models;
