@@ -21,9 +21,14 @@ namespace consumer
             consumer.Received += (ch, ea) =>
             {
                 var message = Encoding.UTF8.GetString(ea.Body);
+
                 Console.WriteLine($"收到消息： {message}");
+
+                Console.WriteLine($"收到该消息[{ea.DeliveryTag}] 延迟10s发送回执");
+                Thread.Sleep(10000);
                 //确认该消息已被消费
                 channel.BasicAck(ea.DeliveryTag, false);
+                Console.WriteLine($"已发送回执[{ea.DeliveryTag}]");
             };
             //启动消费者 设置为手动应答消息
             channel.BasicConsume("hello", false, consumer);
