@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -39,22 +40,5 @@ namespace API.Core.IRepository.BASE
 
 
         Task<List<TEntity>> Query(int intPageIndex, int intPageSize);
-
-        Task<List<TEntity>> QuerySQL(string sql);
-
-        Task<List<TEntity>> FedEx(Model.DoubleTable doubleTable);
-
-        Task<List<TEntity>> FedExPage(Model.DoubleTable doubleTable);
-
-
-        Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, Model.DoubleTable doubleTable);
-
-        Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression);
-
-        Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs);
-
-
-        Task<TEntity[]> SqlByArray(string sql);
-
     }
 }

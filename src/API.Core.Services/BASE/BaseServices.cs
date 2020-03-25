@@ -1,5 +1,6 @@
 ﻿using API.Core.IRepository.BASE;
 using API.Core.IServices.BASE;
+using API.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -265,51 +266,30 @@ namespace API.Core.Services.BASE
 
         }
 
-
-        /// <summary>
-        /// SQL单表查询
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public async Task<List<TEntity>> QuerySQL(string sql)
+        public Task<List<TEntity>> QuerySQL(string sql)
         {
-            return await baseDal.QuerySQL(sql);
+            throw new NotImplementedException();
         }
 
-
-        public async Task<List<TEntity>> FedEx(Model.DoubleTable doubleTable)
+        public Task<List<TEntity>> FedEx(DoubleTable doubleTable)
         {
-            return await baseDal.FedEx(doubleTable);
+            throw new NotImplementedException();
         }
 
-        public async Task<List<TEntity>> FedExPage(Model.DoubleTable doubleTable)
+        public Task<List<TEntity>> FedExPage(DoubleTable doubleTable)
         {
-            return await baseDal.FedExPage(doubleTable);
+            throw new NotImplementedException();
         }
 
-
-        public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, Model.DoubleTable doubleTable)
+        public Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable)
         {
-            return await baseDal.FedExPage(whereExpression, doubleTable);
+            throw new NotImplementedException();
         }
 
-
-        public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression)
+        public Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs)
         {
-            return await baseDal.GetEntitiesAsync(whereExpression);
+            throw new NotImplementedException();
         }
-
-        public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs)
-        {
-            return await baseDal.DynamicWhereByLits(pairs);
-        }
-
-
-        public async Task<TEntity[]> SqlByArray(string sql) 
-        {
-            return await baseDal.SqlByArray(sql);
-        }
-
     }
 
 }
