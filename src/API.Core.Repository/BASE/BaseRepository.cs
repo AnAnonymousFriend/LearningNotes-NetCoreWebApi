@@ -261,9 +261,7 @@ namespace API.Core.Repository.BASE
             public async Task<List<TEntity>> LeagueQueryPage(DoubleTable doubleTable)
             {
 
-                //Console.WriteLine("Javascript".GetQueryField());
-
-                doubleTable.QueryField.GetQueryField();
+              
 
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
@@ -281,7 +279,7 @@ namespace API.Core.Repository.BASE
             /// <param name="whereExpression">条件表达式</param>
             /// <param name="doubleTable">联表参数</param>
             /// <returns></returns>
-            public async Task<List<TEntity>> FedExPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable)
+            public async Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable)
             {
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
@@ -291,6 +289,20 @@ namespace API.Core.Repository.BASE
                                               .WhereIF(whereExpression != null, whereExpression)
                                               .ToPageList(doubleTable.IntPageIndex, doubleTable.IntPageSize)
                );
+            }
+
+            /// <summary>
+            /// 联表查询
+            /// 三表查询
+            /// </summary>
+            /// <param name="leagueTables"></param>
+            /// <returns></returns>
+            public async Task<List<TEntity>> LeagueTables(LeagueTables leagueTables) 
+            {
+                string relation = $"s1.{leagueTables.ForeignKey} = s2.{leagueTables.RightKey}";
+
+
+                return null;
             }
 
 

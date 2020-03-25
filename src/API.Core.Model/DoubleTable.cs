@@ -9,46 +9,7 @@ namespace API.Core.Model
        
       
 
-        /// <summary>
-        /// 左表
-        /// </summary>
-        public string LeftSurface { get; set; }
-
-        /// <summary>
-        /// 右表
-        /// </summary>
-        public string RightSurface { get; set; }
-
-        /// <summary>
-        /// 右表主键
-        /// </summary>
-        public string RightKey { get; set; }
-
-        /// <summary>
-        /// 左表外键
-        /// </summary>
-        public string ForeignKey { get; set; }
-
-        /// <summary>
-        /// 页码
-        /// </summary>
-        public int IntPageIndex { get; set; } = 0;
-
-        /// <summary>
-        /// 页大小
-        /// </summary>
-        public int IntPageSize { get; set; } = 10;
-
-        /// <summary>
-        /// 排序条件
-        /// </summary>
-        public string OrderByFileds { get; set; }
-
-
-        /// <summary>
-        /// 查询字段
-        /// </summary>
-        public string[] QueryField { get; set; }
+       
 
     }
 }
