@@ -73,10 +73,10 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="insertObjs"></param>
             /// <returns></returns>
-            public async Task<int> AddList(List<TEntity> insertObjs) 
+            public async Task<int> AddList(List<TEntity> insertObjs)
             {
                 var i = await Task.Run(() => Db.Insertable(insertObjs.ToArray()).ExecuteReturnBigIdentity());
-                return (int)i;   
+                return (int)i;
             }
 
 
@@ -104,7 +104,7 @@ namespace API.Core.Repository.BASE
             }
 
             [Obsolete]
-            public async Task<bool> Update(TEntity entity, List<string> lstColumns = null, List<string> lstIgnoreColumns = null, string strWhere = "" )   
+            public async Task<bool> Update(TEntity entity, List<string> lstColumns = null, List<string> lstIgnoreColumns = null, string strWhere = "")
             {
                 IUpdateable<TEntity> up = await Task.Run(() => Db.Updateable(entity));
                 if (lstIgnoreColumns != null && lstIgnoreColumns.Count > 0)
@@ -289,7 +289,7 @@ namespace API.Core.Repository.BASE
             /// <param name="intPageSize">页大小</param>
             /// <param name="intTotalCount">数据总量</param>
             /// <returns>数据列表</returns>
-            public async Task<List<TEntity>> Query(int intPageIndex,int intPageSize)
+            public async Task<List<TEntity>> Query(int intPageIndex, int intPageSize)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>()
                                             .ToPageList(intPageIndex, intPageSize));
@@ -395,7 +395,7 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="whereExpression">查询条件</param>
             /// <returns></returns>
-            public async Task<int> TableCount(Expression<Func<TEntity, bool>> whereExpression) 
+            public async Task<int> TableCount(Expression<Func<TEntity, bool>> whereExpression)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>()
                                               .WhereIF(whereExpression != null, whereExpression)
@@ -421,7 +421,7 @@ namespace API.Core.Repository.BASE
 
 
             // 动态拼接Lambda
-            public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression) 
+            public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>().Where(whereExpression).ToList());
             }
@@ -480,6 +480,15 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Insertable(entities.ToArray()).ExecuteCommand());
             }
 
+            /// <summary>
+            /// 查询
+            /// </summary>
+            /// <param name="sql"></param>
+            /// <returns></returns>
+            public async Task<TEntity[]> SqlByArray (string sql) 
+            {
+                return await Task.Run(() => Db.SqlQueryable<TEntity>(sql).ToArray());
+            }
 
 
         }
