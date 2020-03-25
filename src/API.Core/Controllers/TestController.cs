@@ -6,6 +6,7 @@ using API.Core.Common.Helper;
 using API.Core.IServices;
 using API.Core.Model;
 using API.Core.Model.Models;
+using API.Core.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -42,7 +43,17 @@ namespace API.Core.Controllers
 
             var model = await _binArticleServices.GetBinList();
             var data = new { success = true, data = model };
-            return data;
+
+
+            return new MessageModel<BinInfoViewModels>()
+            {
+                Msg = "获取成功",
+                Success = true,
+                Code = 0,
+                Response = model
+            };
+
+            
         }
 
     
