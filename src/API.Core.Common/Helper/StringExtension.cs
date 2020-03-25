@@ -1,12 +1,16 @@
-﻿using System;
-using System.Text;
-
+﻿using System.Text;
 
 namespace API.Core.Common.Helper
 {
-    // 字段解析
-    public static class MonogramHelper
+    public static class StringExtension
     {
+        public static bool IsCapitalized(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return false;
+            return char.IsUpper(s[0]);
+        }
+
 
         /// <summary>
         /// 解析查询字段
@@ -29,13 +33,6 @@ namespace API.Core.Common.Helper
             else
                 return "*";
         }
-
-        public static int WordCount(this String str)
-        {
-            return str.Split(new char[] { ' ', '.', '?' },
-                             StringSplitOptions.RemoveEmptyEntries).Length;
-        }
-
 
     }
 }

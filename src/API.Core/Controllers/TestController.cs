@@ -37,14 +37,16 @@ namespace API.Core.Controllers
         [HttpGet] // GET: api/Test
         public async Task<object> GetAsync()
         {
-           
+
+         
+
             var model = await _binArticleServices.GetBinList();
-
-           
-
             var data = new { success = true, data = model };
             return data;
         }
+
+    
+
 
         /// <summary>
         /// 查询所有

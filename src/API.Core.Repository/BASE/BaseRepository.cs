@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+
 namespace API.Core.Repository.BASE
 {
     namespace Blog.Core.Repository.Base
@@ -228,7 +229,7 @@ namespace API.Core.Repository.BASE
             /// <param name="strOrderByFileds"></param>
             /// <returns></returns>
             public async Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression,
-            int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
+            int intPageIndex = 0, int intPageSize = 10, string strOrderByFileds = null)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>()
                 .OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds)
@@ -259,6 +260,11 @@ namespace API.Core.Repository.BASE
             /// <returns></returns>
             public async Task<List<TEntity>> LeagueQueryPage(DoubleTable doubleTable)
             {
+
+                //Console.WriteLine("Javascript".GetQueryField());
+
+                doubleTable.QueryField.GetQueryField();
+
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
                                               .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
@@ -526,6 +532,9 @@ namespace API.Core.Repository.BASE
             {
                 throw new NotImplementedException();
             }
+
+
+       
         }
     }
 
