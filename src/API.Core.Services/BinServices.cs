@@ -40,13 +40,13 @@ namespace API.Core.Services
         // 分页查询
         public async Task<BinInfoViewModels> GetBinList() 
         {
-            var a =  GetSql();
-            var binArticle = await Query(1, 10);
+            var a = await GetSql().;
+            //var binArticle = await Query(1, 10);
 
-            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
-            return models;
+            //BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
+            //return models;
 
-         
+            return null;
         }
 
 
