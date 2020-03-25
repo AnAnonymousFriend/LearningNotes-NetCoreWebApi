@@ -54,5 +54,7 @@ namespace API.Core.IRepository.BASE
         Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs);
 
 
+        Task<TEntity[]> SqlByArray(string sql);
+
     }
 }

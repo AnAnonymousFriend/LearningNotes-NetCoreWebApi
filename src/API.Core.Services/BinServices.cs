@@ -33,18 +33,27 @@ namespace API.Core.Services
         public async Task<BinInfoViewModels> GetBinList(int id)
         {
             var binArticle = (await Query(a => a.Id == id)).FirstOrDefault();
-
             BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
             return models;
         }
 
-
+        // 分页查询
         public async Task<BinInfoViewModels> GetBinList() 
         {
-            var binArticle = await Query(1,10);
+            var a =  GetSql();
+            var binArticle = await Query(1, 10);
 
             BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
             return models;
+
+         
+        }
+
+
+        public async Task<object> GetSql() 
+        {
+            string sql = "select id from bin_Info LIMIT 0,5";
+            return await SqlByArray(sql);
         }
 
 

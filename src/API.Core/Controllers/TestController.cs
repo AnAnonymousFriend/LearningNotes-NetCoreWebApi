@@ -39,6 +39,9 @@ namespace API.Core.Controllers
         {
            
             var model = await _binArticleServices.GetBinList();
+
+           
+
             var data = new { success = true, data = model };
             return data;
         }

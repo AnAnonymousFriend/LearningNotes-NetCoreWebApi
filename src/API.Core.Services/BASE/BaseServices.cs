@@ -230,6 +230,7 @@ namespace API.Core.Services.BASE
         /// <returns>数据列表</returns>
         public async Task<List<TEntity>> Query(int intPageIndex, int intPageSize)
         {
+
             return await baseDal.Query(intPageIndex,intPageSize);
         }
 
@@ -301,6 +302,12 @@ namespace API.Core.Services.BASE
         public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs)
         {
             return await baseDal.DynamicWhereByLits(pairs);
+        }
+
+
+        public async Task<TEntity[]> SqlByArray(string sql) 
+        {
+            return await baseDal.SqlByArray(sql);
         }
 
     }
