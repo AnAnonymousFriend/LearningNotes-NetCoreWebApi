@@ -105,7 +105,7 @@ namespace API.Core.Repository.BASE
             {
                 return await Task.Run(() => Db.Queryable<TEntity>().OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds).WhereIF(whereExpression != null, whereExpression).ToList());
             }
-            
+
             /// <summary>
             /// 功能描述:查询一个列表
             /// </summary>
@@ -178,8 +178,8 @@ namespace API.Core.Repository.BASE
             /// <param name="intTotalCount">数据总量</param>
             /// <param name="strOrderByFileds">排序字段，如name asc,age desc</param>
             /// <returns>数据列表</returns>
-            public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression,int intPageIndex,
-                                                    int intPageSize,string strOrderByFileds)                                      
+            public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex,
+                                                    int intPageSize, string strOrderByFileds)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>()
                                             .OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds)
@@ -261,7 +261,7 @@ namespace API.Core.Repository.BASE
             public async Task<List<TEntity>> LeagueQueryPage(DoubleTable doubleTable)
             {
 
-              
+
 
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
@@ -297,13 +297,13 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="leagueTables"></param>
             /// <returns></returns>
-            public async Task<List<TEntity>> LeagueTables(LeagueTables leagueTables) 
+            public async Task<List<TEntity>> LeagueTables(LeagueTables leagueTables)
             {
                 string relation = $"s1.{leagueTables.ForeignKey} = s2.{leagueTables.RightKey}";
                 string relation2 = $"s2.{leagueTables.RightKey} = s3.{leagueTables.ThreeKey}";
                 return await Task.Run(() => Db.Queryable(leagueTables.LeftTable, "s1")
                                              .AddJoinInfo(leagueTables.RightTable, "s2", relation)
-                                             .AddJoinInfo(leagueTables.ThreeTable,"s3", relation2)
+                                             .AddJoinInfo(leagueTables.ThreeTable, "s3", relation2)
                                              .Select<TEntity>(MonogramHelper.GetQueryField(leagueTables.QueryField))
                                              .ToPageList(leagueTables.IntPageIndex, leagueTables.IntPageSize));
 
@@ -341,7 +341,7 @@ namespace API.Core.Repository.BASE
                 return (int)i;
             }
 
-        
+
             #endregion
 
 
@@ -491,14 +491,9 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable<TEntity>().Where(conModels).ToList());
             }
 
-            public Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
-            {
-                throw new NotImplementedException();
-            }
-
            
         }
+
+
     }
-
-
 }

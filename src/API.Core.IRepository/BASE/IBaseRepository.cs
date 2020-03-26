@@ -24,7 +24,7 @@ namespace API.Core.IRepository.BASE
         Task<List<TEntity>> Query(
             Expression<Func<TEntity, bool>> whereExpression, int intPageIndex, int intPageSize, string strOrderByFileds);
         Task<List<TEntity>> Query(string strWhere, int intPageIndex, int intPageSize, string strOrderByFileds);
-        Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null);
+
         Task<List<TEntity>> Query(int intPageIndex, int intPageSize);
         Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression,
             int intPageIndex = 0, int intPageSize = 10, string strOrderByFileds = null);
