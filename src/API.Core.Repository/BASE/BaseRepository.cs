@@ -304,7 +304,7 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable(leagueTables.LeftTable, "s1")
                                              .AddJoinInfo(leagueTables.RightTable, "s2", relation)
                                              .AddJoinInfo(leagueTables.ThreeTable,"s3", relation2)
-                                             .Select<TEntity>("*")
+                                             .Select<TEntity>(MonogramHelper.GetQueryField(leagueTables.QueryField))
                                              .ToPageList(leagueTables.IntPageIndex, leagueTables.IntPageSize));
 
 
@@ -316,18 +316,11 @@ namespace API.Core.Repository.BASE
             #endregion
 
 
-
-
-
-
-
-
-
+            #region 新增
 
             /// <summary>
             /// 写入实体数据
             /// </summary>
-            /// <param name="entity">博文实体类</param>
             /// <returns></returns>
             public async Task<int> Add(TEntity entity)
             {
@@ -348,7 +341,9 @@ namespace API.Core.Repository.BASE
                 return (int)i;
             }
 
+            #endregion
 
+            #region 修改
 
             /// <summary>
             /// 更新实体数据
@@ -391,6 +386,11 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => up.ExecuteCommand()) > 0;
             }
 
+
+
+            #endregion
+
+            #region 删除
             /// <summary>
             /// 根据实体删除一条数据
             /// </summary>
@@ -423,6 +423,20 @@ namespace API.Core.Repository.BASE
                 var i = await Task.Run(() => Db.Deleteable<TEntity>().In(ids).ExecuteCommand());
                 return i > 0;
             }
+
+            #endregion
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
