@@ -369,9 +369,6 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Ado.ExecuteCommand(strSql, parameters) > 0);
             }
 
-         
-
-
 
             /// <summary>
             /// 批量修改
@@ -494,29 +491,7 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable<TEntity>().Where(conModels).ToList());
             }
 
-            /// <summary>
-            /// 查询行数
-            /// </summary>
-            /// <param name="whereExpression">查询条件</param>
-            /// <returns></returns>
-            public async Task<int> QueryCount(string strWhere)
-            {
-                return await Task.Run(() => Db.Queryable<TEntity>()
-                                            .WhereIF(!string.IsNullOrEmpty(strWhere), strWhere).Count());
-            }
-
-
-
-           
-
          
-
-           
-
-            public Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
-            {
-                throw new NotImplementedException();
-            }
 
 
        

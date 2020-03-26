@@ -40,15 +40,30 @@ namespace API.Core.IRepository.BASE
         Task<bool> Update(TEntity model);
         Task<bool> Update(TEntity entity, string strWhere);
         Task<bool> Update(TEntity entity, List<string> lstColumns = null, List<string> lstIgnoreColumns = null, string strWhere = "");
+        Task<bool> UpdateList(List<TEntity> list);
 
-
-        Task<bool> DeleteById(object id);
 
         Task<bool> Delete(TEntity model);
 
+        Task<bool> DeleteById(object id);
+
         Task<bool> DeleteByIds(object[] ids);
 
-      
+
+
+        Task<List<TEntity>> QuerySQL(string sql);
+
+        Task<TEntity[]> SqlByArray(string sql);
+
+
+        #region 扩展方法
+        Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs);
+
+        Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression);
+        Task<List<TEntity>> DynamicWhereByList(Dictionary<string, string> pairs);
+
+        #endregion
+
 
     }
 }
