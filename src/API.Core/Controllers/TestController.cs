@@ -38,13 +38,8 @@ namespace API.Core.Controllers
         [HttpGet] // GET: api/Test
         public async Task<object> GetAsync()
         {
-
-         
-
             var model = await _binArticleServices.GetBinList();
-            var data = new { success = true, data = model };
-
-
+           
             return new MessageModel<BinInfoViewModels>()
             {
                 Msg = "获取成功",

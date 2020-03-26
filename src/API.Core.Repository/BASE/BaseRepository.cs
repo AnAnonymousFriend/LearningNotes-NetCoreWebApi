@@ -300,9 +300,15 @@ namespace API.Core.Repository.BASE
             public async Task<List<TEntity>> LeagueTables(LeagueTables leagueTables) 
             {
                 string relation = $"s1.{leagueTables.ForeignKey} = s2.{leagueTables.RightKey}";
+                string relation2 = $"s2.{leagueTables.RightKey} = s3.{leagueTables.ThreeKey}";
+                return await Task.Run(() => Db.Queryable(leagueTables.LeftTable, "s1")
+                                             .AddJoinInfo(leagueTables.RightTable, "s2", relation)
+                                             .AddJoinInfo(leagueTables.ThreeTable,"s3", relation2)
+                                             .Select<TEntity>("*")
+                                             .ToPageList(leagueTables.IntPageIndex, leagueTables.IntPageSize));
 
 
-                return null;
+
             }
 
 
