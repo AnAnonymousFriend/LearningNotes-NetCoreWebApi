@@ -94,14 +94,14 @@ namespace API.Core.Services
         // 动态条件查询
         public async Task<List<BinInfo>> DynamicBehaviour()
         {
-            // OrIF中第一个参数为bool类型 可写判断
-            // 如OrIF(a==b,it => it.Id == 1) 
-            // 如果变量a与b相等则添加 id==1 的条件语句
-            //var exp = SqlSugar.Expressionable.Create<BinInfo>()
-            //                                 .OrIF(true, it => it.Id == 1)
-            //                                 .And(it => it.BinType == "SFP")
-            //                                 .ToExpression();
-            //var list = await GetEntitiesAsync(exp);
+            //OrIF中第一个参数为bool类型 可写判断
+            // 如OrIF(a == b, it => it.Id == 1)
+            // 如果变量a与b相等则添加 id== 1 的条件语句
+            var exp = SqlSugar.Expressionable.Create<BinInfo>()
+                                             .OrIF(true, it => it.Id == 1)
+                                             .And(it => it.BinType == "SFP")
+                                             .ToExpression();
+            var list = await GetEntitiesAsync(exp);
             return null;
 
 

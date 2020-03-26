@@ -15,7 +15,7 @@ namespace API.Core.Services.BASE
 
         public async Task<TEntity> QueryByID(object objId)
         {
-            return await baseDal.QueryByID(objId);
+            return await baseDal.QueryById(objId);
         }
         /// <summary>
         /// 功能描述:根据ID查询一条数据
@@ -26,7 +26,7 @@ namespace API.Core.Services.BASE
         /// <returns>数据实体</returns>
         public async Task<TEntity> QueryByID(object objId, bool blnUseCache = false)
         {
-            return await baseDal.QueryByID(objId, blnUseCache);
+            return await baseDal.QueryById(objId, blnUseCache);
         }
 
         /// <summary>

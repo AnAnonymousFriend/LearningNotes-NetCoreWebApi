@@ -60,13 +60,13 @@ namespace API.Core.Repository.BASE
             /// <param name="objId">id（必须指定主键特性 [SugarColumn(IsPrimaryKey=true)]），如果是联合主键，请使用Where条件</param>
             /// <param name="blnUseCache">是否使用缓存</param>
             /// <returns>数据实体</returns>
-            public async Task<TEntity> QueryByID(object objId, bool blnUseCache = false)
+            public async Task<TEntity> QueryById(object objId, bool blnUseCache = false)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>().WithCacheIF(blnUseCache).InSingle(objId));
             }
 
 
-            public async Task<TEntity> QueryByID(object objId)
+            public async Task<TEntity> QueryById(object objId)
             {
                 return await Task.Run(() => Db.Queryable<TEntity>().InSingle(objId));
             }
@@ -242,7 +242,7 @@ namespace API.Core.Repository.BASE
             /// </summary>
             /// <param name="doubleTable"></param>
             /// <returns></returns>
-            public async Task<List<TEntity>> LeagueQuery(DoubleTable doubleTable)
+            public async Task<List<TEntity>> LeagueQueryAll(DoubleTable doubleTable)
             {
                 string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
                 return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
@@ -341,7 +341,9 @@ namespace API.Core.Repository.BASE
                 return (int)i;
             }
 
+        
             #endregion
+
 
             #region 修改
 
@@ -367,30 +369,26 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Ado.ExecuteCommand(strSql, parameters) > 0);
             }
 
-            [Obsolete]
-            public async Task<bool> Update(TEntity entity, List<string> lstColumns = null, List<string> lstIgnoreColumns = null, string strWhere = "")
-            {
-                IUpdateable<TEntity> up = await Task.Run(() => Db.Updateable(entity));
-                if (lstIgnoreColumns != null && lstIgnoreColumns.Count > 0)
-                {
-                    up = await Task.Run(() => up.IgnoreColumns(it => lstIgnoreColumns.Contains(it)));
-                }
-                if (lstColumns != null && lstColumns.Count > 0)
-                {
-                    up = await Task.Run(() => up.UpdateColumns(it => lstColumns.Contains(it)));
-                }
-                if (!string.IsNullOrEmpty(strWhere))
-                {
-                    up = await Task.Run(() => up.Where(strWhere));
-                }
-                return await Task.Run(() => up.ExecuteCommand()) > 0;
-            }
+         
 
+
+
+            /// <summary>
+            /// 批量修改
+            /// </summary>
+            /// <param name="list"></param>
+            /// <returns></returns>
+            public async Task<bool> UpdateList(List<TEntity> list)
+            {
+                return await Task.Run(() => Db.Updateable(list).ExecuteCommand() > 0 ? true : false);
+            }
 
 
             #endregion
 
+
             #region 删除
+
             /// <summary>
             /// 根据实体删除一条数据
             /// </summary>
@@ -427,26 +425,7 @@ namespace API.Core.Repository.BASE
             #endregion
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            #region SQL查询
 
             /// <summary>
             /// 执行SQL查询语句
@@ -458,20 +437,18 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.SqlQueryable<TEntity>(sql).ToList());
             }
 
-           
 
             /// <summary>
-            /// 查询行数
+            /// 执行SQL查询（返回数组）
             /// </summary>
-            /// <param name="whereExpression">查询条件</param>
+            /// <param name="sql"></param>
             /// <returns></returns>
-            public async Task<int> TableCount(Expression<Func<TEntity, bool>> whereExpression)
+            public async Task<TEntity[]> SqlByArray(string sql)
             {
-                return await Task.Run(() => Db.Queryable<TEntity>()
-                                              .WhereIF(whereExpression != null, whereExpression)
-                                              .Count());
-
+                return await Task.Run(() => Db.SqlQueryable<TEntity>(sql).ToArray());
             }
+
+            #endregion
 
 
             /// <summary>
@@ -530,35 +507,11 @@ namespace API.Core.Repository.BASE
 
 
 
-            /// <summary>
-            /// 批量修改
-            /// </summary>
-            /// <param name="list"></param>
-            /// <returns></returns>
-            public async Task<bool> UpdateList(List<TEntity> list)
-            {
-                return await Task.Run(() => Db.Updateable(list).ExecuteCommand() > 0 ? true : false);
-            }
+           
 
-            /// <summary>
-            /// 批量添加
-            /// </summary>
-            /// <param name="entities"></param>
-            /// <returns></returns>
-            public async Task<int> AddListEntity(List<TEntity> entities)
-            {
-                return await Task.Run(() => Db.Insertable(entities.ToArray()).ExecuteCommand());
-            }
+         
 
-            /// <summary>
-            /// 查询
-            /// </summary>
-            /// <param name="sql"></param>
-            /// <returns></returns>
-            public async Task<TEntity[]> SqlByArray(string sql)
-            {
-                return await Task.Run(() => Db.SqlQueryable<TEntity>(sql).ToArray());
-            }
+           
 
             public Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
             {
