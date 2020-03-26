@@ -491,10 +491,12 @@ namespace API.Core.Repository.BASE
                 return await Task.Run(() => Db.Queryable<TEntity>().Where(conModels).ToList());
             }
 
-         
+            public Task<List<TEntity>> QueryPage(Expression<Func<TEntity, bool>> whereExpression, int intPageIndex = 0, int intPageSize = 20, string strOrderByFileds = null)
+            {
+                throw new NotImplementedException();
+            }
 
-
-       
+           
         }
     }
 

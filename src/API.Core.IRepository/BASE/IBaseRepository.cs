@@ -1,4 +1,5 @@
 ﻿using API.Core.Model;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -39,7 +40,7 @@ namespace API.Core.IRepository.BASE
 
         Task<bool> Update(TEntity model);
         Task<bool> Update(TEntity entity, string strWhere);
-        Task<bool> Update(TEntity entity, List<string> lstColumns = null, List<string> lstIgnoreColumns = null, string strWhere = "");
+        Task<bool> Update(string strSql, SugarParameter[] parameters = null);
         Task<bool> UpdateList(List<TEntity> list);
 
 
