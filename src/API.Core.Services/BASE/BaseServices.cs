@@ -33,41 +33,41 @@ namespace API.Core.Services.BASE
             return await baseDal.QueryById(objId);
         }
 
-        public async Task<TEntity> QueryById(object objId, bool blnUseCache) 
+        public async Task<TEntity> QueryById(object objId, bool blnUseCache)
         {
             return await baseDal.QueryById(objId, blnUseCache);
         }
 
-        public async Task<List<TEntity>> QueryByIDs(object[] lstIds) 
+        public async Task<List<TEntity>> QueryByIDs(object[] lstIds)
         {
             return await baseDal.QueryByIDs(lstIds);
         }
 
-        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression) 
+        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression)
         {
             return await baseDal.Query(whereExpression);
         }
 
-        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, string strOrderByFileds) 
+        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, string strOrderByFileds)
         {
             return await baseDal.Query(whereExpression, strOrderByFileds);
         }
 
-        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderByExpression, bool isAsc = true) 
+        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderByExpression, bool isAsc = true)
         {
             return await baseDal.Query(whereExpression, orderByExpression, isAsc);
         }
 
 
-        public async Task<List<TEntity>> Query(string strWhere, string strOrderByFileds) 
+        public async Task<List<TEntity>> Query(string strWhere, string strOrderByFileds)
         {
             return await baseDal.Query(strWhere, strOrderByFileds);
         }
-        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, int intTop, string strOrderByFileds) 
+        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, int intTop, string strOrderByFileds)
         {
             return await baseDal.Query(whereExpression, intTop, strOrderByFileds);
         }
-        public async Task<List<TEntity>> Query(string strWhere, int intTop, string strOrderByFileds) 
+        public async Task<List<TEntity>> Query(string strWhere, int intTop, string strOrderByFileds)
         {
             return await baseDal.Query(strWhere, intTop, strOrderByFileds);
         }
@@ -76,12 +76,12 @@ namespace API.Core.Services.BASE
         {
             return await baseDal.Query(whereExpression, intPageIndex, intPageSize, strOrderByFileds);
         }
-        public async Task<List<TEntity>> Query(string strWhere, int intPageIndex, int intPageSize, string strOrderByFileds) 
+        public async Task<List<TEntity>> Query(string strWhere, int intPageIndex, int intPageSize, string strOrderByFileds)
         {
             return await baseDal.Query(strWhere, intPageIndex, intPageSize, strOrderByFileds);
         }
 
-        public async Task<List<TEntity>> Query(int intPageIndex, int intPageSize) 
+        public async Task<List<TEntity>> Query(int intPageIndex, int intPageSize)
         {
             return await baseDal.Query(intPageIndex, intPageSize);
         }
@@ -90,95 +90,95 @@ namespace API.Core.Services.BASE
         {
             return await baseDal.LeagueQueryPage(whereExpression, intPageIndex, intPageSize, strOrderByFileds);
         }
-        public async Task<List<TEntity>> LeagueQueryAll(DoubleTable doubleTable) 
+        public async Task<List<TEntity>> LeagueQueryAll(DoubleTable doubleTable)
         {
             return await baseDal.LeagueQueryAll(doubleTable);
         }
-        public async Task<List<TEntity>> LeagueQueryPage(DoubleTable doubleTable) 
+        public async Task<List<TEntity>> LeagueQueryPage(DoubleTable doubleTable)
         {
             return await baseDal.LeagueQueryPage(doubleTable);
         }
-        public async Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable) 
+        public async Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable)
         {
             return await baseDal.LeagueQueryPage(whereExpression, doubleTable);
         }
-        public async Task<List<TEntity>> LeagueTables(LeagueTables leagueTables) 
+        public async Task<List<TEntity>> LeagueTables(LeagueTables leagueTables)
         {
             return await baseDal.LeagueTables(leagueTables);
         }
 
 
-        public async Task<int> Add(TEntity model) 
+        public async Task<int> Add(TEntity model)
         {
             return await baseDal.Add(model);
         }
-        public async Task<int> AddList(List<TEntity> insertObjs) 
+        public async Task<int> AddList(List<TEntity> insertObjs)
         {
             return await baseDal.AddList(insertObjs);
         }
 
 
-        public async Task<bool> Update(TEntity model) 
+        public async Task<bool> Update(TEntity model)
         {
             return await baseDal.Update(model);
         }
 
 
-        public async Task<bool> Update(TEntity entity, string strWhere) 
+        public async Task<bool> Update(TEntity entity, string strWhere)
         {
             return await baseDal.Update(entity, strWhere);
         }
 
 
-        public async Task<bool> Update(string strSql, SugarParameter[] parameters = null) 
+        public async Task<bool> Update(string strSql, SugarParameter[] parameters = null)
         {
             return await baseDal.Update(strSql, parameters);
         }
-        public async Task<bool> UpdateList(List<TEntity> list) 
+        public async Task<bool> UpdateList(List<TEntity> list)
         {
             return await baseDal.UpdateList(list);
         }
 
 
-        public async Task<bool> Delete(TEntity model) 
+        public async Task<bool> Delete(TEntity model)
         {
             return await baseDal.Delete(model);
         }
 
-        public async Task<bool> DeleteById(object id) 
+        public async Task<bool> DeleteById(object id)
         {
             return await baseDal.DeleteById(id);
         }
 
-        public async Task<bool> DeleteByIds(object[] ids) 
+        public async Task<bool> DeleteByIds(object[] ids)
         {
             return await baseDal.DeleteByIds(ids);
         }
 
 
 
-        public async Task<List<TEntity>> QuerySQL(string sql) 
+        public async Task<List<TEntity>> QuerySQL(string sql)
         {
             return await baseDal.QuerySQL(sql);
         }
 
-        public async Task<TEntity[]> SqlByArray(string sql) 
+        public async Task<TEntity[]> SqlByArray(string sql)
         {
             return await baseDal.SqlByArray(sql);
         }
 
 
         #region 扩展方法
-        public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs) 
+        public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs)
         {
             return await baseDal.DynamicWhereByLits(pairs);
         }
 
-        public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression) 
+        public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression)
         {
             return await baseDal.GetEntitiesAsync(whereExpression);
         }
-        public async Task<List<TEntity>> DynamicWhereByList(Dictionary<string, string> pairs) 
+        public async Task<List<TEntity>> DynamicWhereByList(Dictionary<string, string> pairs)
         {
             return await baseDal.DynamicWhereByList(pairs);
         }

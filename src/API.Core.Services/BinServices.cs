@@ -63,30 +63,30 @@ namespace API.Core.Services
 
             throw new ArgumentNullException("发生异常");
 
-            DoubleTable doubleTable = new DoubleTable
-            {
-                LeftSurface = "BinInfo",
-                RightSurface = "OrderInfo",
-                RightKey = "Id",
-                ForeignKey = "order_id",
-                QueryField = new string[]
-                {
-                    "Pn",
-                    "Sn"
-                }
-            };
-            List<BinInfo> binInfos = new List<BinInfo>();
+            //DoubleTable doubleTable = new DoubleTable
+            //{
+            //    LeftSurface = "BinInfo",
+            //    RightSurface = "OrderInfo",
+            //    RightKey = "Id",
+            //    ForeignKey = "order_id",
+            //    QueryField = new string[]
+            //    {
+            //        "Pn",
+            //        "Sn"
+            //    }
+            //};
+            //List<BinInfo> binInfos = new List<BinInfo>();
 
-            if (_redisCacheManager.Get<object>("Redis.Bin") != null)
-            {
-                binInfos = _redisCacheManager.Get<List<BinInfo>>("Redis.Bin");
-            }
-            else
-            {
-                binInfos = await FedExPage(doubleTable);
-                _redisCacheManager.Set("Redis.Bin", binInfos, TimeSpan.FromHours(2));
-            }
-            return binInfos;
+            //if (_redisCacheManager.Get<object>("Redis.Bin") != null)
+            //{
+            //    binInfos = _redisCacheManager.Get<List<BinInfo>>("Redis.Bin");
+            //}
+            //else
+            //{
+            //    binInfos = await FedExPage(doubleTable);
+            //    _redisCacheManager.Set("Redis.Bin", binInfos, TimeSpan.FromHours(2));
+            //}
+            //return binInfos;
 
         }
 

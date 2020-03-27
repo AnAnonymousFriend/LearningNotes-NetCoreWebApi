@@ -67,6 +67,12 @@
             <param name="BindvertisementServices">注册bin服务</param>
             <param name="logger">注册日志</param>
         </member>
+        <member name="M:API.Core.Controllers.TestController.GetBinInfo">
+            <summary>
+            获取Bin列表
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Core.Controllers.TestController.GetAll">
             <summary>
             查询所有

@@ -33,13 +33,15 @@ namespace API.Core.Controllers
             _binArticleServices = BindvertisementServices;
         }
 
-
-       
-        [HttpGet] // GET: api/Test
-        public async Task<object> GetAsync()
+        /// <summary>
+        /// 获取Bin列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("binInfo")]
+        public async Task<MessageModel<BinInfoViewModels>> GetBinInfo() 
         {
             var model = await _binArticleServices.GetBinList();
-           
+
             return new MessageModel<BinInfoViewModels>()
             {
                 Msg = "获取成功",
@@ -47,12 +49,7 @@ namespace API.Core.Controllers
                 Code = 0,
                 Response = model
             };
-
-            
         }
-
-    
-
 
         /// <summary>
         /// 查询所有
@@ -62,7 +59,8 @@ namespace API.Core.Controllers
         [Route("GetAll")]
         public async Task<List<BinInfo>> GetAll()
         {
-            var model = await _binArticleServices.Query();
+            // 分页查询 
+            var model = await _binArticleServices.Query(0,10);
             return model;
         }
 
