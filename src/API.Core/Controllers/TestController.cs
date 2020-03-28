@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Core.Common.Helper;
 using API.Core.IServices;
 using API.Core.Model;
 using API.Core.Model.Models;
 using API.Core.Model.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,16 +18,16 @@ namespace API.Core.Controllers
 
        
         private readonly IBinServices _binArticleServices;
-        private readonly ILogger<TestController> _logger;
+       
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="BindvertisementServices">注册bin服务</param>
-        /// <param name="logger">注册日志</param>
-        public TestController(IBinServices BindvertisementServices, ILogger<TestController> logger)
+       
+        public TestController(IBinServices BindvertisementServices)
         {
-            _logger = logger;
+          
             _binArticleServices = BindvertisementServices;
         }
 
