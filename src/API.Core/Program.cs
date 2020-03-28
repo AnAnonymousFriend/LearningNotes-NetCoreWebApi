@@ -12,7 +12,6 @@ namespace API.Core
         }
         public static IHostBuilder CreateHostBuilder(string[] args) =>
                        Host.CreateDefaultBuilder(args)
-
                       .UseServiceProviderFactory(new AutofacServiceProviderFactory()) //<--NOTE THIS  ÒÀÀµ×¢Èë
                       .ConfigureWebHostDefaults(webBuilder =>
                       {
