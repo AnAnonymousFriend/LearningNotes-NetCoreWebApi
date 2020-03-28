@@ -12,9 +12,11 @@ namespace API.Core.IServices
       
         Task<BinInfoViewModels> GetBinList();
 
-
+        Task<BinInfoViewModels> GetBinList(int id);
         Task<List<BinInfo>> TestGetBinList();
 
         Task<List<BinInfo>> DynamicBehaviour();
+
+      
     }
 }

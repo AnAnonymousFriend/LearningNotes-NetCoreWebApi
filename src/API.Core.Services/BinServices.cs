@@ -98,7 +98,7 @@ namespace API.Core.Services
             // 如OrIF(a == b, it => it.Id == 1)
             // 如果变量a与b相等则添加 id== 1 的条件语句
             var exp = SqlSugar.Expressionable.Create<BinInfo>()
-                                             .OrIF(true, it => it.Id == 1)
+                                             .OrIF(true, it => it.Id == 18)
                                              .And(it => it.BinType == "SFP")
                                              .ToExpression();
             var list = await GetEntitiesAsync(exp);
@@ -124,7 +124,9 @@ namespace API.Core.Services
             osbinFile.CreateBinFile();
         }
 
-      
+
+
+       
 
 
     }
