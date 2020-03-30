@@ -36,3 +36,9 @@ DoubleTable 实体类属性如下图
 ![](docs/Img/PathGenerated.png)
 
 
+
+注意一：
+
+​			Dto 应该和ViewModels 区分开来。不应该直接暴露Dto ，这样既不安全 又会造成开发中的麻烦：一旦更改数据库结构，那么API对外消费者也需更改。
+
+​		对于程序来说，数据库和Dto 是紧密结合的，这对API 和 数据各自升级照成了不便。
