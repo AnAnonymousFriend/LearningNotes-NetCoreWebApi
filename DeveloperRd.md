@@ -1,5 +1,52 @@
-注意一：
+**API对外接口文档** 
 
-​			Dto 应该和ViewModels 区分开来。不应该直接暴露Dto ，这样既不安全 又会造成开发中的麻烦：一旦更改数据库结构，那么API对外消费者也需更改。
+**简要描述：** 
 
-​		对于程序来说，数据库和Dto 是紧密结合的，这对API 和 数据各自升级照成了不便。
+- 添加Bin
+
+**请求URL：** 
+
+- ` http://localhost:5000/api/Test/AddBin `
+
+**请求方式：**
+
+- POST 
+
+**参数：** 
+
+| 参数名        | 必选 | 类型   | 说明      |
+| :------------ | :--- | :----- | --------- |
+| pn            | 是   | string | 型号名    |
+| sn            | 是   | string | 序列号    |
+| waveband      | 否   | string | 波段      |
+| distance      | 是   | string | 距离      |
+| isddm         | 否   | bool   | 是否能DDM |
+| binType       | 是   | string | 类型      |
+| binMeter      | 是   | string | 米数      |
+| compatibility | 是   | string | 兼容      |
+| manufacturer  | 是   | string | 厂商      |
+| version       | 是   | string | 版本      |
+| binByte       | 否   | string | 字节      |
+|               |      |        |           |
+
+ **返回示例**
+
+``` 
+{
+  "success": true,
+  "code": 0,
+  "msg": "添加成功",
+  "response": "1"
+}
+```
+
+ **返回参数说明** 
+
+| 参数名   | 类型 | 说明               |
+| :------- | :--- | ------------------ |
+| code     | int  | 0为成功            |
+| response | int  | 返回数据库新增的Id |
+
+ **备注** 
+
+- 更多返回错误代码请看首页的错误代码描述
