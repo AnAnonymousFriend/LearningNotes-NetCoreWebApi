@@ -9,14 +9,16 @@ namespace API.Core.IServices
 {
     public interface IBinServices : IBaseServices<BinInfo>
     {
-      
-        Task<BinInfoViewModels> GetBinList();
 
-        Task<BinInfoViewModels> GetBinList(int id);
-        Task<List<BinInfo>> TestGetBinList();
+        //Task<BinInfoViewModels> GetBinList();
 
-        Task<List<BinInfo>> DynamicBehaviour();
+        //Task<BinInfoViewModels> GetBinList(int id);
 
-      
+        //Task<BinInfo> TestGetBinList();
+
+        //Task<List<BinInfo>> DynamicBehaviour();
+
+        Task<object> GetBinTemplate();
+
     }
 }

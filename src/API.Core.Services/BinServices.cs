@@ -41,27 +41,30 @@ namespace API.Core.Services
         public async Task<BinInfoViewModels> GetBinList() 
         {
             //var a = await GetSql().;
-            //var binArticle = await Query(1, 10);
+            var binArticle = await Query(1, 10);
+            BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
+            return models;
 
-            //BinInfoViewModels models = _mapper.Map<BinInfoViewModels>(binArticle);
-            //return models;
-
-            return null;
         }
 
 
-        //public async Task<object> GetSql() 
-        //{
-        //    string sql = "select id from bin_Info LIMIT 0,5";
-        //    return await SqlByArray(sql);
-        //}
+        public async Task<object> GetSql()
+        {
+            string sql = "select id from bin_Info LIMIT 0,5";
+            return await SqlByArray(sql);
+        }
 
 
 
-        public async Task<List<BinInfo>> TestGetBinList()
+        public async Task<List<BinInfo>> TestGetBinList(int modelid,string compatibleType)
         {
 
-            throw new ArgumentNullException("发生异常");
+            string modelTypeSQL = "select id from bin_madalena_type where  madalena_id=1 and compatible_type='IBM' LIMIT 1";
+            var modelTypeid = await SqlByArray(modelTypeSQL);
+            return null;
+
+
+            //throw new ArgumentNullException("发生异常");
 
             //DoubleTable doubleTable = new DoubleTable
             //{
@@ -108,6 +111,8 @@ namespace API.Core.Services
         }
 
 
+
+
         /// <summary>
         ///  抽象工厂类
         /// </summary>
@@ -124,10 +129,15 @@ namespace API.Core.Services
             osbinFile.CreateBinFile();
         }
 
+        public async Task<object> GetBinTemplate()
+        {
+            string modelTypeSQL = "select id from bin_madalena_type where  madalena_id=1 and compatible_type='IBM' LIMIT 1";
+            var modelTypeid = SqlByArray(modelTypeSQL);
 
+            string sql = "SELECT bin_template,version,sn FROM bin_madalena_attr_value WHERE madalena_type_id=1 and attr_key='0,0' AND attr_value='0,0' AND version='AOC-1'";
+            var bins = await SqlByArray(modelTypeSQL);
 
-       
-
-
+            return bins;
+        }
     }
 }

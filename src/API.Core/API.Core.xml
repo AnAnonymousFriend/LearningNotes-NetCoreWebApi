@@ -66,35 +66,10 @@
             </summary>
             <param name="BindvertisementServices">注册bin服务</param>
         </member>
-        <member name="M:API.Core.Controllers.TestController.GetBinInfo">
+        <member name="M:API.Core.Controllers.TestController.GetBinTemplate">
             <summary>
-            获取Bin列表
+            查询bin模板
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:API.Core.Controllers.TestController.GetAll">
-            <summary>
-            查询所有
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:API.Core.Controllers.TestController.LeagueTableTest">
-            <summary>
-            测试方法
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:API.Core.Controllers.TestController.DynamicBehaviour">
-            <summary>
-            动态表达式调取
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:API.Core.Controllers.TestController.AddBin(API.Core.Model.Models.BinInfo)">
-            <summary>
-            添加操作
-            </summary>
-            <param name="binInfo"></param>
             <returns></returns>
         </member>
         <member name="T:API.Core.Extensions.AutoMapperSetup">
