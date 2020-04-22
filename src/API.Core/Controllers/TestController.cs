@@ -40,10 +40,19 @@ namespace API.Core.Controllers
         [Route("BinTemplate")]
         public async Task<object> GetBinTemplate()
         {
-            //调用该方法，这里 _blogArticleServices 是依赖注入的实例，不是类
-            var model = await _binArticleServices.GetBinTemplate();
-            var data = new { success = true, data = model };
-            return data;
+            try
+            {
+                //调用该方法，这里 _blogArticleServices 是依赖注入的实例，不是类
+                var model = await _binArticleServices.GetBinTemplate();
+                var data = new { success = true, data = model };
+                return data;
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+               
+            }
+           
         }
 
 
