@@ -1,6 +1,7 @@
 ﻿using API.Core.Common.LogHelper;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
+using Serilog;
 using StackExchange.Profiling;
 using System;
 using System.Linq;
@@ -83,10 +84,12 @@ namespace API.Core.AOP
             }
             catch (Exception)
             {
-                Parallel.For(0, 1, e =>
-                {
-                    LogLock.OutSql2Log("AOPLog", new string[] { dataIntercept });
-                });
+
+                Log.Error(dataIntercept);
+                //Parallel.For(0, 1, e =>
+                //{
+                //    LogLock.OutSql2Log("AOPLog", new string[] { dataIntercept });
+                //});
             }
         }
 
