@@ -63,7 +63,89 @@ namespace API.Core.IRepository.BASE
         Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> whereExpression);
         Task<List<TEntity>> DynamicWhereByList(Dictionary<string, string> pairs);
 
+
+        /// <summary>
+        /// 双表连接查询数据
+        /// </summary>
+        /// <typeparam name="T2">B表类型</typeparam>
+        /// <typeparam name="TOutput">返回类型</typeparam>
+        /// <param name="joinExp">join表达式</param>
+        /// <param name="whereExp">where表达式</param>
+        /// <param name="selectExp">select表达式</param>
+        /// <returns></returns>
+        Task<List<TOutput>> Query<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp);
+
+
+
+        /// <summary>
+        /// 三表连接查询
+        /// </summary>
+        /// <typeparam name="T2">第2张表</typeparam>
+        /// <typeparam name="T3">第3张表</typeparam>
+        /// <typeparam name="TOutput">返回类型</typeparam>
+        /// <param name="joinExp">join表达式</param>
+        /// <param name="whereExp">where表达式</param>
+        /// <param name="selectExp">select表达式</param>
+        /// <returns></returns>
+        Task<List<TOutput>> Query<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp);
+
+
+        /// <summary>
+        /// 双表连接查询数据
+        /// </summary>
+        /// <typeparam name="T2">B表类型</typeparam>
+        /// <typeparam name="TOutput">返回类型</typeparam>
+        /// <param name="joinExp">join表达式</param>
+        /// <param name="whereExp">where表达式</param>
+        /// <param name="selectExp">select表达式</param>
+        /// <param name="inExp">in表达式</param>
+        /// <param name="inValues">in的范围</param>
+        /// <returns></returns>
+        Task<List<TOutput>> QueryByIn<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues);
+
+        /// <summary>
+        /// 三表连接查询加In
+        /// </summary>
+        /// <typeparam name="T2">第2张表</typepar--am>
+        /// <typeparam name="T3">第3张表</typeparam>
+        /// <typeparam name="TOutput">返回类型</typeparam>
+        /// <param name="joinExp">join表达式</param>
+        /// <param name="whereExp">where表达式</param>
+        /// <param name="selectExp">select表达式</param>
+        /// <param name="inExp">in表达式</param>-
+        /// <param name="inValues">in的范围</param>
+        /// <returns></returns>
+        Task<List<TOutput>> QueryByIn<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues);
+
+        /// <summary>
+        /// 2表查询带排序
+        /// </summary>
+        /// <typeparam name="T2">B表类型</typeparam>
+        /// <typeparam name="TOutput">返回类型</typeparam>
+        /// <param name="joinExp">join表达式</param>
+        /// <param name="whereExp">where表达式</param>
+        /// <param name="selectExp">select表达式</param> 
+        /// <param name="orderExp">排序表达式(选取排序字段）</param>
+        /// <param name="orderByType">排序方式</param>
+        /// <returns></returns>
+        Task <List<TOutput>> QueryByOrder<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType);
+
+        /// <summary>
+        /// 三表查询带排序
+        /// </summary>
+        /// <typeparam name="T2">第2张表</typepar--am>
+        /// <typeparam name="T3">第3张表</typeparam>
+        /// <typeparam name="TOutput">返回类型</typeparam>
+        /// <param name="joinExp">join表达式</param>
+        /// <param name="whereExp">where表达式</param>
+        /// <param name="selectExp">select表达式</param> 
+        /// <param name="orderExp">排序表达式(选取排序字段）</param>
+        /// <param name="orderByType">排序方式</param>
+        /// <returns></returns>
+        Task<List<TOutput>> QueryByOrder<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType);
         #endregion
+
+
 
 
     }

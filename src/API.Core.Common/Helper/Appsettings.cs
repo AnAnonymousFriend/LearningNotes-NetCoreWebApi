@@ -45,7 +45,7 @@ namespace API.Core.Common.Helper
             }
             catch (Exception ex ) 
             {
-                string a = ex.ToString();
+               
             }
 
             return "";

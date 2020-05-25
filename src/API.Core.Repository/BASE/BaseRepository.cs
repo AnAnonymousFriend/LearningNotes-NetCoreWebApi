@@ -19,15 +19,12 @@ namespace API.Core.Repository.BASE
         internal SimpleClient<TEntity> EntityDB { get; private set; }
         public BaseRepository()
         {
-            DbContext.Init(BaseDBConfig.ConnectionString);
+            string ConnectionString = Appsettings.app(new string[] { "AppSettings", "DbConnectionStr", "ConnectionString" });//获取连接字符串
+            DbContext.Init(ConnectionString);
             Context = DbContext.GetDbContext();
             Db = Context.Db;
             EntityDB = Context.GetEntityDB<TEntity>(Db);
         }
-
-
-
-
         #region 查询
 
 
@@ -311,6 +308,41 @@ namespace API.Core.Repository.BASE
         }
 
 
+        public async Task<List<TOutput>> Query<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp)
+        {
+            return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).Select(selectExp).ToList());
+
+        }
+
+        public async Task<List<TOutput>> Query<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp) 
+        {
+            return await Task.Run(()=> Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).Select(selectExp).ToList());
+        }
+
+
+
+        public async Task<List<TOutput>> QueryByIn<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues)
+        {
+            return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).In(inExp, inValues).Select(selectExp).ToList());
+            
+        }
+
+        public async Task<List<TOutput>> QueryByIn<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues) 
+        {
+            return await Task.Run(()=> Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).In(inExp, inValues).Select(selectExp).ToList());
+        }
+
+        public async Task<List<TOutput>> QueryByOrder<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType)
+        {
+            return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).OrderBy(orderExp, orderByType).Select(selectExp).ToList());
+        }
+
+        public async Task<List<TOutput>> QueryByOrder<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType)
+        {
+            return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).OrderBy(orderExp, orderByType).Select(selectExp).ToList());
+        }
+
+
 
         #endregion
 
@@ -493,4 +525,4 @@ namespace API.Core.Repository.BASE
 
     }
 
-}
+}      
