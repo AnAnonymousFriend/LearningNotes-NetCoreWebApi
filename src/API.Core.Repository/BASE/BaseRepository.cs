@@ -25,6 +25,7 @@ namespace API.Core.Repository.BASE
             Db = Context.Db;
             EntityDB = Context.GetEntityDB<TEntity>(Db);
         }
+
         #region 查询
 
 
@@ -61,7 +62,6 @@ namespace API.Core.Repository.BASE
             return await Task.Run(() => Db.Queryable<TEntity>().WithCacheIF(blnUseCache).InSingle(objId));
         }
 
-
         public async Task<TEntity> QueryById(object objId)
         {
             return await Task.Run(() => Db.Queryable<TEntity>().InSingle(objId));
@@ -75,6 +75,20 @@ namespace API.Core.Repository.BASE
         /// <returns>数据实体列表</returns>
         public async Task<List<TEntity>> QueryByIDs(object[] lstIds)
         {
+
+            return await Task.Run(() => Db.Queryable<TEntity>().In(lstIds).ToList());
+        }
+
+        // <summary>
+        /// 功能描述:外键ID查询数据
+        /// 
+        /// </summary>
+        /// <param name="lstIds">id列表（必须指定主键特性 [SugarColumn(IsPrimaryKey=true)]），如果是联合主键，请使用Where条件</param>
+        /// <returns>数据实体列表</returns>
+        public async Task<List<TEntity>> QueryByIDs(int[] lstIds)
+        {
+
+            var in1 = Db.Queryable<TEntity>().In("it=>it.ModelBinAttrId", lstIds).ToList();
             return await Task.Run(() => Db.Queryable<TEntity>().In(lstIds).ToList());
         }
 
@@ -240,10 +254,27 @@ namespace API.Core.Repository.BASE
         /// <returns></returns>
         public async Task<List<TEntity>> LeagueQueryAll(DoubleTable doubleTable)
         {
+
             string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
+
             return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
                                           .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
                                           .Select<TEntity>(MonogramHelper.GetQueryField(doubleTable.QueryField))
+                                          .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
+                                          .ToList()
+           );
+        }
+
+
+        public async Task<List<TOutput>> LeagueQueryAll<TOutput>(Expression<Func<TOutput, bool>> whereExp, DoubleTable doubleTable)
+        {
+
+            string relation = $"s1.{doubleTable.ForeignKey} = s2.{doubleTable.RightKey}";
+
+            return await Task.Run(() => Db.Queryable(doubleTable.LeftSurface, "s1")
+                                          .AddJoinInfo(doubleTable.RightSurface, "s2", relation)
+                                          .Select<TOutput>(MonogramHelper.GetQueryField(doubleTable.QueryField))
+                                          .WhereIF(whereExp != null, whereExp)
                                           .OrderByIF(!string.IsNullOrEmpty(doubleTable.OrderByFileds), doubleTable.OrderByFileds)
                                           .ToList()
            );
@@ -308,15 +339,23 @@ namespace API.Core.Repository.BASE
         }
 
 
+        public async Task<List<TOutput>> Query<TOutput>(Expression<Func<TOutput, bool>> whereExp, Expression<Func<TOutput, TOutput>> selectExp)
+        {
+            var a = Db.Queryable<TOutput>().WhereIF(whereExp != null, whereExp).Select(selectExp).ToSql();
+            return await Db.Queryable<TOutput>().WhereIF(whereExp != null, whereExp).Select(selectExp).ToListAsync();
+        }
+
+
+
         public async Task<List<TOutput>> Query<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp)
         {
             return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).Select(selectExp).ToList());
 
         }
 
-        public async Task<List<TOutput>> Query<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp) 
+        public async Task<List<TOutput>> Query<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp)
         {
-            return await Task.Run(()=> Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).Select(selectExp).ToList());
+            return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).Select(selectExp).ToList());
         }
 
 
@@ -324,12 +363,12 @@ namespace API.Core.Repository.BASE
         public async Task<List<TOutput>> QueryByIn<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues)
         {
             return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).In(inExp, inValues).Select(selectExp).ToList());
-            
+
         }
 
-        public async Task<List<TOutput>> QueryByIn<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues) 
+        public async Task<List<TOutput>> QueryByIn<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues)
         {
-            return await Task.Run(()=> Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).In(inExp, inValues).Select(selectExp).ToList());
+            return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).In(inExp, inValues).Select(selectExp).ToList());
         }
 
         public async Task<List<TOutput>> QueryByOrder<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType)
@@ -341,6 +380,8 @@ namespace API.Core.Repository.BASE
         {
             return await Task.Run(() => Db.Queryable(joinExp).WhereIF(whereExp != null, whereExp).OrderBy(orderExp, orderByType).Select(selectExp).ToList());
         }
+
+
 
 
 
@@ -476,6 +517,22 @@ namespace API.Core.Repository.BASE
             return await Task.Run(() => Db.SqlQueryable<TEntity>(sql).ToArray());
         }
 
+        /// <summary>
+        /// 动态SQL
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public async Task<List<dynamic>> DynamicSqlList(string sql)
+        {
+            return await Task.Run(() => Db.SqlQueryable<dynamic>(sql).ToList());
+        }
+
+        public async Task<dynamic> DynamicSql(string sql)
+        {
+            return await Task.Run(() => Db.SqlQueryable<dynamic>(sql));
+        }
+
+
         #endregion
 
 
@@ -525,4 +582,4 @@ namespace API.Core.Repository.BASE
 
     }
 
-}      
+}

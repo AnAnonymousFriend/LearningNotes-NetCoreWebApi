@@ -9,7 +9,10 @@ namespace API.Core.IServices.BASE
 {
     public interface IBaseServices<TEntity> where TEntity : class
     {
+
+
         Task<List<TEntity>> Query();
+        Task<List<TOutput>> Query<TOutput>(Expression<Func<TOutput, bool>> whereExp, Expression<Func<TOutput, TOutput>> selectExp);
         Task<List<TEntity>> Query(string strWhere);
         Task<TEntity> QueryById(object objId);
         Task<TEntity> QueryById(object objId, bool blnUseCache = false);
@@ -27,6 +30,8 @@ namespace API.Core.IServices.BASE
         Task<List<TEntity>> Query(int intPageIndex, int intPageSize);
         Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression,
             int intPageIndex = 0, int intPageSize = 10, string strOrderByFileds = null);
+
+        Task<List<TOutput>> LeagueQueryAll<TOutput>(Expression<Func<TOutput, bool>> whereExp, DoubleTable doubleTable);
         Task<List<TEntity>> LeagueQueryAll(DoubleTable doubleTable);
         Task<List<TEntity>> LeagueQueryPage(DoubleTable doubleTable);
         Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable);
@@ -55,6 +60,9 @@ namespace API.Core.IServices.BASE
 
         Task<TEntity[]> SqlByArray(string sql);
 
+        Task<List<dynamic>> DynamicSqlList(string sql);
+
+        Task<dynamic> DynamicSql(string sql);
 
         #region 扩展方法
         Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs);

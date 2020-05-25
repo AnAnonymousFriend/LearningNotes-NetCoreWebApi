@@ -52,6 +52,7 @@ namespace API.Core.Repository.sugar
                 DbType = DbType,
                 IsAutoCloseConnection = true,
                 IsShardSameThread = true,
+
                 ConfigureExternalServices = new ConfigureExternalServices()
                 {
                     //DataInfoCacheService = new HttpRuntimeCache()
@@ -59,9 +60,11 @@ namespace API.Core.Repository.sugar
                 MoreSettings = new ConnMoreSettings()
                 {
                     //IsWithNoLockQuery = true,
-                    IsAutoRemoveDataCache = true
-                }
+                    IsAutoRemoveDataCache = true,
+                },
+                InitKeyType = InitKeyType.Attribute
             });
+
         }
 
         /// <summary>
@@ -87,8 +90,9 @@ namespace API.Core.Repository.sugar
                 {
                     //IsWithNoLockQuery = true,
                     IsAutoRemoveDataCache = true
-                }
-            });
+                },
+                InitKeyType = InitKeyType.Attribute
+            }); ;
         }
 
         #region 实例方法
@@ -332,7 +336,8 @@ namespace {Namespace}
                 {
                     //DataInfoCacheService = new HttpRuntimeCache()
                 },
-                IsShardSameThread = blnIsShardSameThread
+                IsShardSameThread = blnIsShardSameThread,
+                InitKeyType = InitKeyType.Attribute
             };
             return config;
         }

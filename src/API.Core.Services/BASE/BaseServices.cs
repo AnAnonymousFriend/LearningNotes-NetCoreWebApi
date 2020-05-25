@@ -13,6 +13,12 @@ namespace API.Core.Services.BASE
     {
         public IBaseRepository<TEntity> baseDal;
 
+        public async Task<List<TOutput>> Query<TOutput>(Expression<Func<TOutput, bool>> whereExp, Expression<Func<TOutput, TOutput>> selectExp)
+
+        {
+            return await baseDal.Query<TOutput>(whereExp, selectExp);
+        }
+
         public async Task<List<TEntity>> Query()
         {
             return await baseDal.Query();
@@ -90,6 +96,12 @@ namespace API.Core.Services.BASE
         {
             return await baseDal.LeagueQueryPage(whereExpression, intPageIndex, intPageSize, strOrderByFileds);
         }
+
+        public async Task<List<TOutput>> LeagueQueryAll<TOutput>(Expression<Func<TOutput, bool>> whereExp, DoubleTable doubleTable)
+        {
+            return await baseDal.LeagueQueryAll<TOutput>(whereExp, doubleTable);
+        }
+
         public async Task<List<TEntity>> LeagueQueryAll(DoubleTable doubleTable)
         {
             return await baseDal.LeagueQueryAll(doubleTable);
@@ -167,6 +179,21 @@ namespace API.Core.Services.BASE
             return await baseDal.SqlByArray(sql);
         }
 
+        /// <summary>
+        /// 动态SQL
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public async Task<List<dynamic>> DynamicSqlList(string sql)
+        {
+            return await baseDal.DynamicSqlList(sql);
+        }
+        public async Task<dynamic> DynamicSql(string sql)
+        {
+            return await baseDal.DynamicSql(sql);
+        }
+
+
 
         #region 扩展方法
         public async Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs)
@@ -192,7 +219,7 @@ namespace API.Core.Services.BASE
         /// <param name="whereExp">where表达式</param>
         /// <param name="selectExp">select表达式</param>
         /// <returns></returns>
-        public async Task<List<TOutput>> Query<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp) 
+        public async Task<List<TOutput>> Query<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp)
         {
             return await baseDal.Query<T2, TOutput>(joinExp, whereExp, selectExp);
         }
@@ -207,7 +234,7 @@ namespace API.Core.Services.BASE
         /// <param name="whereExp">where表达式</param>
         /// <param name="selectExp">select表达式</param>
         /// <returns></returns>
-        public async Task<List<TOutput>> Query<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp) 
+        public async Task<List<TOutput>> Query<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp)
         {
             return await baseDal.Query<T2, T3, TOutput>(joinExp, whereExp, selectExp);
         }
@@ -225,7 +252,7 @@ namespace API.Core.Services.BASE
         /// <param name="inValues">in的范围</param>
         /// <returns></returns>
 
-        public async Task<List<TOutput>> QueryByIn<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues) 
+        public async Task<List<TOutput>> QueryByIn<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues)
         {
             return await baseDal.QueryByIn<T2, TOutput>(joinExp, whereExp, selectExp, inExp, inValues);
         }
@@ -242,9 +269,9 @@ namespace API.Core.Services.BASE
         /// <param name="inExp">in表达式</param>-
         /// <param name="inValues">in的范围</param>
         /// <returns></returns>
-        public async Task<List<TOutput>> QueryByIn<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues) 
+        public async Task<List<TOutput>> QueryByIn<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> inExp, object inValues)
         {
-            return await baseDal.QueryByIn<T2, T3, TOutput>(joinExp,  whereExp, selectExp,inExp, inValues);
+            return await baseDal.QueryByIn<T2, T3, TOutput>(joinExp, whereExp, selectExp, inExp, inValues);
         }
 
         /// <summary>
@@ -259,7 +286,7 @@ namespace API.Core.Services.BASE
         /// <param name="orderByType">排序方式</param>
         /// <returns></returns>
 
-        public async Task<List<TOutput>> QueryByOrder<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType) 
+        public async Task<List<TOutput>> QueryByOrder<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType)
         {
             return await baseDal.QueryByOrder<T2, TOutput>(joinExp, whereExp, selectExp, orderExp, orderByType);
         }
@@ -277,10 +304,12 @@ namespace API.Core.Services.BASE
         /// <param name="orderByType">排序方式</param>
         /// <returns></returns>
 
-        public async Task<List<TOutput>> QueryByOrder<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType) 
+        public async Task<List<TOutput>> QueryByOrder<T2, T3, TOutput>(Expression<Func<TEntity, T2, T3, bool>> joinExp, Expression<Func<TEntity, T2, T3, bool>> whereExp, Expression<Func<TEntity, T2, T3, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType)
         {
             return await baseDal.QueryByOrder<T2, T3, TOutput>(joinExp, whereExp, selectExp, orderExp, orderByType);
-        }        
+        }
+
+
         #endregion
 
 

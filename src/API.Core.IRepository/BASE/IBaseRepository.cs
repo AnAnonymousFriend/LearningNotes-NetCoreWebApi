@@ -10,11 +10,18 @@ namespace API.Core.IRepository.BASE
     public interface IBaseRepository<TEntity> where TEntity : class
     {
 
+
+
         Task<List<TEntity>> Query();
+
+        Task<List<TOutput>> Query<TOutput>(Expression<Func<TOutput, bool>> whereExp, Expression<Func<TOutput, TOutput>> selectExp);
+
         Task<List<TEntity>> Query(string strWhere);
         Task<TEntity> QueryById(object objId);
         Task<TEntity> QueryById(object objId, bool blnUseCache = false);
         Task<List<TEntity>> QueryByIDs(object[] lstIds);
+
+        Task<List<TEntity>> QueryByIDs(int[] lstIds);
         Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression);
         Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, string strOrderByFileds);
         Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression, Expression<Func<TEntity, object>> orderByExpression, bool isAsc = true);
@@ -29,6 +36,8 @@ namespace API.Core.IRepository.BASE
         Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression,
             int intPageIndex = 0, int intPageSize = 10, string strOrderByFileds = null);
         Task<List<TEntity>> LeagueQueryAll(DoubleTable doubleTable);
+
+        Task<List<TOutput>> LeagueQueryAll<TOutput>(Expression<Func<TOutput, bool>> whereExp, DoubleTable doubleTable);
         Task<List<TEntity>> LeagueQueryPage(DoubleTable doubleTable);
         Task<List<TEntity>> LeagueQueryPage(Expression<Func<TEntity, bool>> whereExpression, DoubleTable doubleTable);
         Task<List<TEntity>> LeagueTables(LeagueTables leagueTables);
@@ -56,6 +65,8 @@ namespace API.Core.IRepository.BASE
 
         Task<TEntity[]> SqlByArray(string sql);
 
+        Task<List<dynamic>> DynamicSqlList(string sql);
+        Task<dynamic> DynamicSql(string sql);
 
         #region 扩展方法
         Task<List<TEntity>> DynamicWhereByLits(Dictionary<string, string> pairs);
@@ -128,7 +139,7 @@ namespace API.Core.IRepository.BASE
         /// <param name="orderExp">排序表达式(选取排序字段）</param>
         /// <param name="orderByType">排序方式</param>
         /// <returns></returns>
-        Task <List<TOutput>> QueryByOrder<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType);
+        Task<List<TOutput>> QueryByOrder<T2, TOutput>(Expression<Func<TEntity, T2, bool>> joinExp, Expression<Func<TEntity, T2, bool>> whereExp, Expression<Func<TEntity, T2, TOutput>> selectExp, Expression<Func<TEntity, T2, object>> orderExp, OrderByType orderByType);
 
         /// <summary>
         /// 三表查询带排序
